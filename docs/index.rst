@@ -82,5 +82,8 @@ To launch tests:
 Usage
 =====
 
+Sources
+=======
+
 .. toctree::
-   dsfaker
+    dsfaker

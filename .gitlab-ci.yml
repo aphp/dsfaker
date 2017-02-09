@@ -1,0 +1,19 @@
+image: ubuntu:16.04
+
+build:linux:
+  stage: build
+  script:
+    - pip install -r requirements.txt
+    - pip install .
+
+test:linux:
+  stage: test
+  script: echo "Testing... TODO"
+  dependencies:
+    - build:linux
+
+deploy:
+  stage: deploy
+  script: echo "Deploying... TODO"
+  dependencies:
+    - test:linux
