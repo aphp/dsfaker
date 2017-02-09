@@ -1,0 +1,2 @@
+class NotCompatibleDistributionException(Exception):
+    pass

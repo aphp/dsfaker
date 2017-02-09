@@ -1,2 +1,3 @@
-from .autoincrement import Autoincrement
-from .randomnumber import RandomNumber
+# -*- coding: utf-8 -*-
+from .autoincrement import *
+from .randomnumber import *
