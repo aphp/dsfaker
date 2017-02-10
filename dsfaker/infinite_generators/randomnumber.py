@@ -1,7 +1,7 @@
 import numpy
 
 from dsfaker import InfiniteGenerator
-from dsfaker.distributions import Distribution, BoundedDistribution
+from dsfaker.distributions import Distribution, DistributionBounded
 from dsfaker.exceptions import NotCompatibleDistributionException
 
 
@@ -29,7 +29,7 @@ class RandomNumberBounded(RandomNumber):
     """
     Bounded RandomNumber
     """
-    def __init__(self, distribution: BoundedDistribution, lb: int, ub: int, dtype: numpy.dtype=None):
+    def __init__(self, distribution: DistributionBounded, lb: int, ub: int, dtype: numpy.dtype=None):
         super().__init__(distribution, dtype)
         if distribution.bounded is False:
             raise NotCompatibleDistributionException("BoundedRandomNumber need a BoundedDistribution.")

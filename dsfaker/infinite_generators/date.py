@@ -1,13 +1,13 @@
 import numpy
 
-from dsfaker.distributions import BoundedDistribution
+from dsfaker.distributions import DistributionBounded
 from . import RandomNumberBounded, InfiniteGenerator
 
 
-class RandomDate(InfiniteGenerator):
-    def __init__(self, distribution: BoundedDistribution, start: numpy.datetime64, end: numpy.datetime64, unit):
+class RandomDatetime(InfiniteGenerator):
+    def __init__(self, distribution: DistributionBounded, start: numpy.datetime64, end: numpy.datetime64, unit):
         """
-        A timezone-aware class to generate dates between start and end (inclusive) following a certain distribution
+        A timezone-aware class to generate datetimes between start and end (inclusive) following a certain distribution
 
         :param distribution:
         :param start: The starting date (inclusive)
