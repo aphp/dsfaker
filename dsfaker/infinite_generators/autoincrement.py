@@ -10,10 +10,6 @@ class Autoincrement(InfiniteGenerator):
         self.dtype = dtype
         self.step = step
 
-    def _produce_single(self):
-        self.offset += 1
-        return self.start + self.offset * self.step
-
     def reset(self, start: int=None, step: int=None):
         self.offset = 0
         if start is not None:
@@ -22,11 +18,12 @@ class Autoincrement(InfiniteGenerator):
             self.step = step
 
     def get_single(self):
-        return self._produce_single()
+        self.offset += 1
+        return self.start + self.offset * self.step
 
     def stream_single(self):
         while True:
-            yield self._produce_single()
+            yield self.get_single()
 
     def get_batch(self, batch_size: int):
         self.offset += batch_size

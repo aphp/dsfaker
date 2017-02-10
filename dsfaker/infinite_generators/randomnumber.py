@@ -25,19 +25,19 @@ class RandomNumber(InfiniteGenerator):
             yield self.get_batch(batch_size)
 
 
-class BoundedRandomNumber(RandomNumber):
+class RandomNumberBounded(RandomNumber):
     """
     Bounded RandomNumber
     """
-    def __init__(self, distribution: BoundedDistribution, lb: int, up: int, dtype: numpy.dtype=None):
+    def __init__(self, distribution: BoundedDistribution, lb: int, ub: int, dtype: numpy.dtype=None):
         super().__init__(distribution, dtype)
         if distribution.bounded is False:
             raise NotCompatibleDistributionException("BoundedRandomNumber need a BoundedDistribution.")
-        if lb >= up:
-            raise ValueError("lb should be less or equal to up")
+        if lb >= ub:
+            raise ValueError("lb should be less than up")
         self.lb = lb
-        self.up = up
-        self.coef = (up - lb) / (self.distribution.up - self.distribution.lb)
+        self.ub = ub
+        self.coef = (ub - lb) / (self.distribution.up - self.distribution.lb)
 
     def get_single(self):
         return self.distribution.get() * self.coef + self.lb - self.distribution.lb

@@ -10,9 +10,9 @@ class Distribution:
 
 
 class BoundedDistribution(Distribution):
+    bounded = True
     lb = None
     up = None
-    bounded = True
 
 
 class Beta(BoundedDistribution):
@@ -38,7 +38,7 @@ class Beta(BoundedDistribution):
         self.rs = RandomState(seed=seed)
 
     def get(self, size=None):
-        return self.rs.beta(self.a, self.b, size=size)
+        return self.rs.beta(a=self.a, b=self.b, size=size)
 
 
 class Power(BoundedDistribution):
@@ -57,6 +57,4 @@ class Power(BoundedDistribution):
         self.rs = RandomState(seed=seed)
 
     def get(self, size=None):
-        return self.rs.power(self.a, size=size)
-
-
+        return self.rs.power(a=self.a, size=size)
