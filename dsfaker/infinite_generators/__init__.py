@@ -2,4 +2,4 @@
 from .randomnumber import *
 from .autoincrement import *
 from .date import *
-from .timeseries import *
+from .series import *
