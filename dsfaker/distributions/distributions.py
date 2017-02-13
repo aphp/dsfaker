@@ -1,35 +1,19 @@
 from typing import Union, Iterable
 
 import numpy
+from numpy import ndarray
 from numpy.random.mtrand import RandomState
 
+from .base import DistributionNonNegative
+from .base import DistributionBounded
 
-class Distribution:
-    bounded = None
-    continuous = None
-
-    def get(self, size=None):
-        raise NotImplementedError("get not implemented!")
-
-
-class DistributionUnbounded(Distribution):
-    bounded = False
-
-
-class DistributionNonNegative(Distribution):
-    bounded = True
-    lb = 0
-
-
-class DistributionBounded(Distribution):
-    bounded = True
-    lb = None
-    up = None
+from .base import DistributionUnbounded
 
 
 class Beta(DistributionBounded):
     """
     The Beta distribution is bounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.beta <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.beta.html>`_.
 
     Distribution function:
@@ -45,8 +29,8 @@ class Beta(DistributionBounded):
     up = 1
 
     def __init__(self,
-                 a: Union[float, numpy.ndarray, Iterable[float]],
-                 b: Union[float, numpy.ndarray, Iterable[float]],
+                 a: Union[float, ndarray, Iterable[float]],
+                 b: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.a = a
         self.b = b
@@ -61,6 +45,7 @@ class Beta(DistributionBounded):
 class Binomial(DistributionNonNegative):
     """
     The Binomial distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.binomial <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.binomial.html>`_.
 
     Distribution function:
@@ -70,8 +55,8 @@ class Binomial(DistributionNonNegative):
     continuous = False
 
     def __init__(self,
-                 n: Union[int, numpy.ndarray, Iterable[int]],
-                 p: Union[float, numpy.ndarray, Iterable[float]],
+                 n: Union[int, ndarray, Iterable[int]],
+                 p: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.n = n
         self.p = p
@@ -86,6 +71,7 @@ class Binomial(DistributionNonNegative):
 class BinomialNegative(DistributionNonNegative):
     """
     The negative Binomial distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.negative_binomial <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.negative_binomial.html>`_.
 
     Distribution function:
@@ -95,8 +81,8 @@ class BinomialNegative(DistributionNonNegative):
     continuous = False
 
     def __init__(self,
-                 n: Union[int, numpy.ndarray, Iterable[int]],
-                 p: Union[float, numpy.ndarray, Iterable[float]],
+                 n: Union[int, ndarray, Iterable[int]],
+                 p: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.n = n
         self.p = p
@@ -111,6 +97,7 @@ class BinomialNegative(DistributionNonNegative):
 class CauchyStandard(DistributionUnbounded):
     """
     The standard Cauchy distribution is unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.standard_cauchy <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.standard_cauchy.html>`_.
 
     Distribution function:
@@ -129,6 +116,7 @@ class CauchyStandard(DistributionUnbounded):
 class Chisquare(DistributionNonNegative):
     """
     The Chisquare distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.chisquare <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.chisquare.html>`_.
 
     Distribution function:
@@ -138,7 +126,7 @@ class Chisquare(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 k: Union[int, numpy.ndarray, Iterable[int]],
+                 k: Union[int, ndarray, Iterable[int]],
                  seed=None):
         self.k = k
         self.rs = RandomState(seed=seed)
@@ -151,17 +139,18 @@ class Chisquare(DistributionNonNegative):
 class ChisquareNonCentral(DistributionNonNegative):
     """
     The non-central Chisquare distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.noncentral_chisquare <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.noncentral_chisquare.html>`_.
 
     Distribution function:
 
-    .. math:: P(x;df,nonc) = \\sum^{\\infty}_{i=0} \\frac{e^{-nonc/2}(nonc/2)^{i}}{i!} \\P_{Y_{df+2i}}(x)
+    .. math:: P(x;df,nonc) = \\sum^{\\infty}_{i=0} \\frac{e^{-nonc/2}(nonc/2)^{i}}{i!} P_{Y_{df+2i}}(x)
     """
     continuous = True
 
     def __init__(self,
-                 k: Union[int, numpy.ndarray, Iterable[int]],
-                 nonc: Union[float, numpy.ndarray, Iterable[float]],
+                 k: Union[int, ndarray, Iterable[int]],
+                 nonc: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.k = k
         self.nonc = nonc
@@ -176,6 +165,7 @@ class ChisquareNonCentral(DistributionNonNegative):
 class Dirichlet(DistributionNonNegative):
     """
     The Dirichlet distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.dirichlet <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.dirichlet.html>`_.
 
     Distribution function:
@@ -198,6 +188,7 @@ class Dirichlet(DistributionNonNegative):
 class Exponential(DistributionNonNegative):
     """
     The Exponential distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.exponential <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.exponential.html>`_.
 
     Distribution function:
@@ -207,7 +198,7 @@ class Exponential(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 beta: Union[int, numpy.ndarray, Iterable[int]] = 1.0,
+                 beta: Union[int, ndarray, Iterable[int]] = 1.0,
                  seed=None):
         self.beta = beta
         self.rs = RandomState(seed=seed)
@@ -220,13 +211,14 @@ class Exponential(DistributionNonNegative):
 class F(DistributionNonNegative):
     """
     The Fisher distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.f <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.f.html>`_.
     """
     continuous = True
 
     def __init__(self,
-                 dfnum: Union[int, numpy.ndarray, Iterable[int]],
-                 dfden: Union[int, numpy.ndarray, Iterable[int]],
+                 dfnum: Union[int, ndarray, Iterable[int]],
+                 dfden: Union[int, ndarray, Iterable[int]],
                  seed=None):
         self.dfnum = dfnum
         self.dfden = dfden
@@ -241,14 +233,15 @@ class F(DistributionNonNegative):
 class FNonCentral(DistributionNonNegative):
     """
     The non-central Fisher distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.noncentral_f <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.noncentral_f.html>`_.
     """
     continuous = True
 
     def __init__(self,
-                 dfnum: Union[int, numpy.ndarray, Iterable[int]],
-                 dfden: Union[int, numpy.ndarray, Iterable[int]],
-                 nonc: Union[float, numpy.ndarray, Iterable[float]],
+                 dfnum: Union[int, ndarray, Iterable[int]],
+                 dfden: Union[int, ndarray, Iterable[int]],
+                 nonc: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.dfnum = dfnum
         self.dfden = dfden
@@ -265,6 +258,7 @@ class FNonCentral(DistributionNonNegative):
 class Gamma(DistributionNonNegative):
     """
     The Gamma distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.gamma <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.gamma.html>`_.
 
     Distribution function:
@@ -274,8 +268,8 @@ class Gamma(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 k: Union[float, numpy.ndarray, Iterable[float]],
-                 theta: Union[float, numpy.ndarray, Iterable[float]]=1.0,
+                 k: Union[float, ndarray, Iterable[float]],
+                 theta: Union[float, ndarray, Iterable[float]] = 1.0,
                  seed=None):
         self.k = k
         self.theta = theta
@@ -290,6 +284,7 @@ class Gamma(DistributionNonNegative):
 class Geometric(DistributionNonNegative):
     """
     The Geometric distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.geometric <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.geometric.html>`_.
 
     Distribution function:
@@ -300,7 +295,7 @@ class Geometric(DistributionNonNegative):
     lb = 1
 
     def __init__(self,
-                 p: Union[float, numpy.ndarray, Iterable[float]],
+                 p: Union[float, ndarray, Iterable[float]],
                  seed=None):
         if p <= 0:
             raise ValueError("p parameter should be > 0")
@@ -315,6 +310,7 @@ class Geometric(DistributionNonNegative):
 class Gumbel(DistributionUnbounded):
     """
     The Gumbel distribution is unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.gumbel <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.gumbel.html>`_.
 
     Distribution function:
@@ -324,8 +320,8 @@ class Gumbel(DistributionUnbounded):
     continuous = True
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]]=0.0,
-                 beta: Union[float, numpy.ndarray, Iterable[float]]=1.0,
+                 mu: Union[float, ndarray, Iterable[float]] = 0.0,
+                 beta: Union[float, ndarray, Iterable[float]] = 1.0,
                  seed=None):
         self.mu = mu
         self.beta = beta
@@ -340,6 +336,7 @@ class Gumbel(DistributionUnbounded):
 class Hypergeometric(DistributionNonNegative):
     """
     The Hypergeometric distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.hypergeometric <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.hypergeometric.html>`_.
 
     Distribution function:
@@ -350,8 +347,8 @@ class Hypergeometric(DistributionNonNegative):
 
     def __init__(self,
                  n: int,
-                 m: Union[int, numpy.ndarray, Iterable[int]],
-                 N: Union[int, numpy.ndarray, Iterable[int]],
+                 m: Union[int, ndarray, Iterable[int]],
+                 N: Union[int, ndarray, Iterable[int]],
                  seed=None):
         self.n = n
         self.m = m
@@ -368,6 +365,7 @@ class Hypergeometric(DistributionNonNegative):
 class Laplace(DistributionUnbounded):
     """
     The Laplace distribution is unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.laplace <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.laplace.html>`_.
 
     Distribution function:
@@ -377,8 +375,8 @@ class Laplace(DistributionUnbounded):
     continuous = True
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 beta: Union[float, numpy.ndarray, Iterable[float]],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 beta: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.mu = mu
         self.beta = beta
@@ -393,6 +391,7 @@ class Laplace(DistributionUnbounded):
 class Logistic(DistributionUnbounded):
     """
     The Logistic distribution is unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.logistic <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.logistic.html>`_.
 
     Distribution function:
@@ -402,8 +401,8 @@ class Logistic(DistributionUnbounded):
     continuous = True
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 beta: Union[float, numpy.ndarray, Iterable[float]],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 beta: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.mu = mu
         self.beta = beta
@@ -418,6 +417,7 @@ class Logistic(DistributionUnbounded):
 class Lognormal(DistributionNonNegative):
     """
     The Lognormal distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.lognormal <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.lognormal.html>`_.
 
     Distribution function:
@@ -427,8 +427,8 @@ class Lognormal(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 sigma: Union[float, numpy.ndarray, Iterable[float]],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 sigma: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.mu = mu
         self.sigma = sigma
@@ -443,13 +443,14 @@ class Lognormal(DistributionNonNegative):
 class Multinomial(DistributionNonNegative):
     """
     The Multinomial distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.multinomial <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.multinomial.html>`_.
     """
     continuous = False
 
     def __init__(self,
                  n: int,
-                 pvals: Union[float, numpy.ndarray, Iterable[float]],
+                 pvals: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.n = n
         self.pvals = pvals
@@ -463,7 +464,8 @@ class Multinomial(DistributionNonNegative):
 
 class Normal(DistributionUnbounded):
     """
-    The Normal/Gaussian distribution
+    The Normal/Gaussian distribution if unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.normal <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.normal.html>`_.
 
     Distribution function:
@@ -473,8 +475,8 @@ class Normal(DistributionUnbounded):
     continuous = True
 
     def __init__(self,
-                 mean: Union[float, numpy.ndarray, Iterable[float]]=0.0,
-                 std:  Union[float, numpy.ndarray, Iterable[float]]=1.0,
+                 mean: Union[float, ndarray, Iterable[float]] = 0.0,
+                 std: Union[float, ndarray, Iterable[float]] = 1.0,
                  seed=None):
         self.mean = mean
         self.std = std
@@ -487,13 +489,14 @@ class Normal(DistributionUnbounded):
 class NormalMultivariate(DistributionUnbounded):
     """
     The multivariate Normal distribution is unbounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.multivariate_normal <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.multivariate_normal.html>`_.
     """
     continuous = False
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 cov: Union[numpy.ndarray],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 cov: Union[ndarray],
                  seed=None):
         self.mu = mu
         self.cov = cov
@@ -508,6 +511,7 @@ class NormalMultivariate(DistributionUnbounded):
 class Pareto(DistributionNonNegative):
     """
     The Pareto distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.pareto <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.pareto.html>`_.
 
     Distribution function:
@@ -518,19 +522,20 @@ class Pareto(DistributionNonNegative):
     lb = 1
 
     def __init__(self,
-                 a: Union[float, numpy.ndarray, Iterable[float]],
+                 a: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.a = a
         self.rs = RandomState(seed=seed)
 
     def get(self, size=None):
         return self.rs.pareto(a=self.a,
-                             size=size)
+                              size=size)
 
 
 class Poisson(DistributionNonNegative):
     """
     The Poisson distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.poisson <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.poisson.html>`_.
 
     Distribution function:
@@ -540,7 +545,7 @@ class Poisson(DistributionNonNegative):
     continuous = False
 
     def __init__(self,
-                 lam: Union[float, numpy.ndarray, Iterable[float]]=1.0,
+                 lam: Union[float, ndarray, Iterable[float]] = 1.0,
                  seed=None):
         self.lam = lam
         self.rs = RandomState(seed=seed)
@@ -553,6 +558,7 @@ class Poisson(DistributionNonNegative):
 class Power(DistributionBounded):
     """
     The Power distribution is bounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.power <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.power.html>`_.
 
     Distribution function:
@@ -564,7 +570,7 @@ class Power(DistributionBounded):
     ub = 1
 
     def __init__(self,
-                 a: Union[float, numpy.ndarray, Iterable[float]],
+                 a: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.a = a
         self.rs = RandomState(seed=seed)
@@ -577,6 +583,7 @@ class Power(DistributionBounded):
 class Randint(DistributionBounded):
     """
     The Randint distribution is bounded and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.randint <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.randint.html>`_.
     """
     continuous = False
@@ -598,6 +605,7 @@ class Randint(DistributionBounded):
 class RandomSample(DistributionBounded):
     """
     The RandomSample distribution is bounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.random_sample <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.random_sample.html>`_.
     """
     continuous = True
@@ -614,6 +622,7 @@ class RandomSample(DistributionBounded):
 class Rayleigh(DistributionNonNegative):
     """
     The Rayleigh distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.rayleigh <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.rayleigh.html>`_.
 
     Distribution function:
@@ -623,7 +632,7 @@ class Rayleigh(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 sigma: Union[float, numpy.ndarray, Iterable[float]],
+                 sigma: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.sigma = sigma
         self.rs = RandomState(seed=seed)
@@ -636,6 +645,7 @@ class Rayleigh(DistributionNonNegative):
 class Triangular(DistributionBounded):
     """
     The Triangular distribution is bounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.triangular <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.triangular.html>`_.
 
     Distribution function:
@@ -645,9 +655,9 @@ class Triangular(DistributionBounded):
     continuous = True
 
     def __init__(self,
-                 lb: Union[float, numpy.ndarray, Iterable[float]],
-                 step: Union[float, numpy.ndarray, Iterable[float]],
-                 ub: Union[float, numpy.ndarray, Iterable[float]],
+                 lb: Union[float, ndarray, Iterable[float]],
+                 step: Union[float, ndarray, Iterable[float]],
+                 ub: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.lb = lb
         self.step = step
@@ -664,6 +674,7 @@ class Triangular(DistributionBounded):
 class Uniform(DistributionBounded):
     """
     The Uniform distribution is bounded and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.uniform <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.uniform.html>`_.
 
     Distribution function:
@@ -673,8 +684,8 @@ class Uniform(DistributionBounded):
     continuous = False
 
     def __init__(self,
-                 lb: Union[float, numpy.ndarray, Iterable[float]],
-                 ub: Union[float, numpy.ndarray, Iterable[float]],
+                 lb: Union[float, ndarray, Iterable[float]],
+                 ub: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.lb = lb
         self.ub = ub
@@ -689,6 +700,7 @@ class Uniform(DistributionBounded):
 class Vonmises(DistributionBounded):
     """
     The Vonmises distribution is bounded and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.vonmises <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.vonmises.html>`_.
 
     Distribution function:
@@ -700,8 +712,8 @@ class Vonmises(DistributionBounded):
     ub = +numpy.math.pi
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 kappa: Union[float, numpy.ndarray, Iterable[float]],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 kappa: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.mu = mu
         self.kappa = kappa
@@ -716,6 +728,7 @@ class Vonmises(DistributionBounded):
 class Wald(DistributionNonNegative):
     """
     The Wald distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.wald <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.wald.html>`_.
 
     Distribution function:
@@ -725,8 +738,8 @@ class Wald(DistributionNonNegative):
     """
 
     def __init__(self,
-                 mu: Union[float, numpy.ndarray, Iterable[float]],
-                 lam: Union[float, numpy.ndarray, Iterable[float]],
+                 mu: Union[float, ndarray, Iterable[float]],
+                 lam: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.mu = mu
         self.lam = lam
@@ -741,6 +754,7 @@ class Wald(DistributionNonNegative):
 class Weibull(DistributionNonNegative):
     """
     The Weibull distribution is non-negative and continuous.
+
     The implementation is from `numpy.random.mtrand.RandomState.weibull <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.weibull.html>`_.
 
     Distribution function:
@@ -750,7 +764,7 @@ class Weibull(DistributionNonNegative):
     continuous = True
 
     def __init__(self,
-                 a: Union[float, numpy.ndarray, Iterable[float]],
+                 a: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.a = a
         self.rs = RandomState(seed=seed)
@@ -763,6 +777,7 @@ class Weibull(DistributionNonNegative):
 class Zipf(DistributionNonNegative):
     """
     The Zipf distribution is non-negative and discrete.
+
     The implementation is from `numpy.random.mtrand.RandomState.zipf <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.zipf.html>`_.
 
     Distribution function:
@@ -773,7 +788,7 @@ class Zipf(DistributionNonNegative):
     lb = 1
 
     def __init__(self,
-                 a: Union[float, numpy.ndarray, Iterable[float]],
+                 a: Union[float, ndarray, Iterable[float]],
                  seed=None):
         self.a = a
         self.rs = RandomState(seed=seed)

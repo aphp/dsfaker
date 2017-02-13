@@ -1,30 +1,34 @@
-dsfaker.infinite_generators package
-===================================
+Infinite generators
+===================
 
-Submodules
-----------
-
-dsfaker.infinite_generators.autoincrement module
-------------------------------------------------
+Autoincrement
+-------------
 
 .. automodule:: dsfaker.infinite_generators.autoincrement
     :members:
     :undoc-members:
     :show-inheritance:
 
-dsfaker.infinite_generators.randomnumber module
------------------------------------------------
+Date / Datetime
+---------------
+
+.. automodule:: dsfaker.infinite_generators.date
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Random Number
+-------------
 
 .. automodule:: dsfaker.infinite_generators.randomnumber
     :members:
     :undoc-members:
     :show-inheritance:
 
+Time-series
+-----------
 
-Module contents
----------------
-
-.. automodule:: dsfaker.infinite_generators
+.. automodule:: dsfaker.infinite_generators.timeseries
     :members:
     :undoc-members:
     :show-inheritance:

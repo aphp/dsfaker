@@ -1,5 +1,5 @@
-dsfaker.finite_generators package
-=================================
+Finite generators
+=================
 
 Module contents
 ---------------

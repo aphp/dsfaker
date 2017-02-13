@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from .distributions import *
+from .base import *
 from .distributions import *

@@ -1,22 +1,20 @@
-dsfaker.distributions package
-=============================
+.. _dsfaker-distributions:
 
-Submodules
-----------
+Distributions
+=============
 
-dsfaker.distributions.distributions module
-------------------------------------------
+Base
+----
 
-.. automodule:: dsfaker.distributions.distributions
+.. automodule:: dsfaker.distributions.base
     :members:
     :undoc-members:
     :show-inheritance:
 
+Probability distributions
+-------------------------
 
-Module contents
----------------
-
-.. automodule:: dsfaker.distributions
+.. automodule:: dsfaker.distributions.distributions
     :members:
     :undoc-members:
     :show-inheritance:

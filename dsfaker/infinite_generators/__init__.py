@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .autoincrement import *
 from .randomnumber import *
+from .autoincrement import *
 from .date import *
 from .timeseries import *
