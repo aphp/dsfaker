@@ -1,10 +1,10 @@
 import numpy
 
-from dsfaker import ApplyFunctionGenerator
+from dsfaker import ApplyFunctionOperator
 from dsfaker.infinite_generators import InfiniteGenerator, Autoincrement
 
 
-class Trigo(ApplyFunctionGenerator):
+class Trigo(ApplyFunctionOperator):
     def __init__(self, function, generator: InfiniteGenerator):
         super().__init__(function, generator)
 
