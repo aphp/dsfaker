@@ -23,13 +23,5 @@ class RandomDatetime(InfiniteGenerator):
     def get_single(self):
         return self.start + numpy.timedelta64(int(round(self.rnb.get_single())), self.unit)
 
-    def stream_single(self):
-        while True:
-            yield self.get_single()
-
     def get_batch(self, batch_size: int):
         return self.start + self.rnb.get_batch(batch_size=batch_size).astype(self.td_unit)
-
-    def stream_batch(self, batch_size: int):
-        while True:
-            yield self.get_batch(batch_size)

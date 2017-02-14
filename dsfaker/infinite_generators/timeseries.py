@@ -9,13 +9,5 @@ class TimeSeries(InfiniteGenerator):
     def get_single(self):
         return self.data_gen.get_single(), self.time_gen.get_single()
 
-    def stream_single(self):
-        while True:
-            yield self.get_single()
-
     def get_batch(self, batch_size: int):
         return self.data_gen.get_batch(batch_size=batch_size), self.time_gen.get_batch(batch_size=batch_size)
-
-    def stream_batch(self, batch_size: int):
-        while True:
-            yield self.get_batch(batch_size=batch_size)

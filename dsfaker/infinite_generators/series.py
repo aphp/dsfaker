@@ -46,13 +46,5 @@ class RepeatPattern(Serie):
     def get_single(self):
         return self._get(1)
 
-    def stream_single(self):
-        while True:
-            yield self.get_single()
-
     def get_batch(self, batch_size: int):
         return self._get(batch_size)
-
-    def stream_batch(self, batch_size: int):
-        while True:
-            yield self.get_batch(batch_size)

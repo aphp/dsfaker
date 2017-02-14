@@ -13,16 +13,8 @@ class RandomNumber(InfiniteGenerator):
     def get_single(self):
         return self.distribution.get()
 
-    def stream_single(self):
-        while True:
-            yield self.get_single()
-
     def get_batch(self, batch_size: int):
         return numpy.array(self.distribution.get(size=(1, batch_size)), dtype=self.dtype)
-
-    def stream_batch(self, batch_size: int):
-        while True:
-            yield self.get_batch(batch_size)
 
 
 class RandomNumberBounded(RandomNumber):
@@ -42,13 +34,5 @@ class RandomNumberBounded(RandomNumber):
     def get_single(self):
         return self.distribution.get() * self.coef + self.lb - self.distribution.lb
 
-    def stream_single(self):
-        while True:
-            yield self.get_single()
-
     def get_batch(self, batch_size: int):
         return numpy.array(self.distribution.get(size=(1, batch_size)), dtype=self.dtype) * self.coef + self.lb - self.distribution.lb
-
-    def stream_batch(self, batch_size: int):
-        while True:
-            yield self.get_batch(batch_size)

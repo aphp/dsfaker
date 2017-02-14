@@ -25,10 +25,28 @@ Random Number
     :undoc-members:
     :show-inheritance:
 
+Series
+------
+
+.. automodule:: dsfaker.infinite_generators.series
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Time-series
 -----------
 
 .. automodule:: dsfaker.infinite_generators.timeseries
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Trigonometric
+-------------
+
+.. automodule:: dsfaker.infinite_generators.trigonometric
     :members:
     :undoc-members:
     :show-inheritance:
