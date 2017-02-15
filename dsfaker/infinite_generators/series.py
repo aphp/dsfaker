@@ -37,11 +37,11 @@ class RepeatPattern(Serie):
                 tiles = numpy.tile(self.pattern, nb_tiles)
                 split_index = size - (nb_tiles * self.l) - remaining
                 old_idx = self.index
-                self.index = self.l + split_index
+                self.index = self.l + split_index + 1
                 return numpy.concatenate((self.pattern[old_idx:], tiles[:split_index] if split_index != 0 else tiles))
             else:
                 self.index += size
-                return self.pattern[(self.index-size):self.index-1]
+                return self.pattern[(self.index-size):self.index]
 
     def get_single(self):
         return self._get(1)
