@@ -62,7 +62,7 @@ We provide four different ways of getting the generated data:
 .. code-block:: python
 
    >>> rnb.get_batch(batch_size=3)
-   array([[ 11.390625,   8.765625,   5.671875]], dtype=float16)
+   array([ 11.390625,   8.765625,   5.671875], dtype=float16)
 
 - Stream batches through python's yield:
 
@@ -70,10 +70,10 @@ We provide four different ways of getting the generated data:
 
    >>> for batch in rnb.stream_batch(batch_size=10000):
    >>>  print(batch)
-   [[  2.46484375  10.9375       1.203125   ...,   6.78125     19.921875
-       7.7265625 ]]
-   [[ 11.484375     8.953125    -1.61132812 ...,   2.33203125  -0.11328125
-      -1.44335938]]
+   [  2.46484375  10.9375       1.203125   ...,   6.78125     19.921875
+       7.7265625 ]
+   [ 11.484375     8.953125    -1.61132812 ...,   2.33203125  -0.11328125
+      -1.44335938]
    ...
 
 When the generator is finite, you can get all the data at a time:

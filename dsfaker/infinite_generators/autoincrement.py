@@ -1,6 +1,6 @@
 import numpy
 
-from dsfaker import InfiniteGenerator
+from dsfaker import InfiniteGenerator, Generator
 from dsfaker.infinite_generators import RandomNumber
 
 
@@ -28,7 +28,7 @@ class AutoincrementRandom(InfiniteGenerator):
         """
 
         :param start: The value to start with
-        :param rn: A RandomNumber or its child classes instance
+        :param rn: A RandomNumber or one of its child class instance
         :param dtype: The data type to return
         """
         self.start = start
@@ -45,3 +45,4 @@ class AutoincrementRandom(InfiniteGenerator):
         random_incremental = self.current_val + numpy.cumsum(self.rn.get_batch(batch_size=batch_size))
         self.current_val = random_incremental[-1]
         return random_incremental
+

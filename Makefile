@@ -1,10 +1,11 @@
-all:
+install:
 	pip install -r requirements.txt
 	pip install .
 
-reinstall:
+uninstall:
 	pip uninstall -y dsfaker
-	pip install .
+
+reinstall: uninstall install
 
 .ONESHELL:
 doc:
@@ -18,3 +19,6 @@ open-doc-chrome: doc
 
 test:
 	pip install -r requirements.test.txt
+
+
+all: install

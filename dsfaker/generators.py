@@ -75,6 +75,19 @@ class InfiniteGenerator(Generator):
     pass
 
 
+class BoundedGenerator(Generator):
+    def __init__(self, generator: Generator, lb: float, ub: float):
+        self.generator = generator
+        self.lb = lb
+        self.ub = ub
+
+    def get_single(self):
+        return numpy.clip(self.generator.get_single(), self.lb, self.ub)
+
+    def get_batch(self, batch_size: int):
+        return numpy.clip(self.generator.get_batch(batch_size=batch_size), self.lb, self.ub)
+
+
 class UniqueValueGenerator(InfiniteGenerator):
     def __init__(self, value):
         self.value = value
@@ -117,49 +130,49 @@ class ReduceOperator(Generator):
 
 class AddOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.add(a,b))
+        super().__init__(*generators, reduce_lambda=operator.add)
 
 
 class SubOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.sub(a,b))
+        super().__init__(*generators, reduce_lambda=operator.sub)
 
 
 class TrueDivOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.truediv(a,b))
+        super().__init__(*generators, reduce_lambda=operator.truediv)
 
 
 class FloorDivOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.floordiv(a,b))
+        super().__init__(*generators, reduce_lambda=operator.floordiv)
 
 
 class MulOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.mul(a,b))
+        super().__init__(*generators, reduce_lambda=operator.mul)
 
 
 class PowOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.pow(a,b))
+        super().__init__(*generators, reduce_lambda=operator.pow)
 
 
 class ModOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.mod(a,b))
+        super().__init__(*generators, reduce_lambda=operator.mod)
 
 
 class AndOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.and_(a,b))
+        super().__init__(*generators, reduce_lambda=operator.and_)
 
 
 class OrOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.or_(a,b))
+        super().__init__(*generators, reduce_lambda=operator.or_)
 
 
 class XorOperator(ReduceOperator):
     def __init__(self, *generators):
-        super().__init__(*generators, reduce_lambda=lambda a, b: operator.xor(a,b))
+        super().__init__(*generators, reduce_lambda=operator.xor)
