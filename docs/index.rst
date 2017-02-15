@@ -105,6 +105,5 @@ User guide
 
    overview
    dsfaker.distributions
-   dsfaker.finite_generators
-   dsfaker.infinite_generators
+   dsfaker.generators
    dsfaker.noise

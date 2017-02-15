@@ -22,6 +22,6 @@ test: install
 
 test-with-coverage: install
 	pip install -r requirements.test.txt
-	python -m pytest --cov=dsfaker tests --cov-report=html
+	python -m pytest --cov=dsfaker tests --cov-report=html --cov-report=xml --cov-report=term
 
 all: install

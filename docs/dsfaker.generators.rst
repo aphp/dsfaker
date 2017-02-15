@@ -1,10 +1,10 @@
-Infinite generators
-===================
+Generators
+==========
 
 Autoincrement
 -------------
 
-.. automodule:: dsfaker.infinite_generators.autoincrement
+.. automodule:: dsfaker.generators.autoincrement
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ Autoincrement
 Date / Datetime
 ---------------
 
-.. automodule:: dsfaker.infinite_generators.date
+.. automodule:: dsfaker.generators.date
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ Date / Datetime
 Random Number
 -------------
 
-.. automodule:: dsfaker.infinite_generators.randomnumber
+.. automodule:: dsfaker.generators.randomnumber
     :members:
     :undoc-members:
     :show-inheritance:
@@ -28,7 +28,7 @@ Random Number
 Series
 ------
 
-.. automodule:: dsfaker.infinite_generators.series
+.. automodule:: dsfaker.generators.series
     :members:
     :undoc-members:
     :show-inheritance:
@@ -37,7 +37,7 @@ Series
 Time-series
 -----------
 
-.. automodule:: dsfaker.infinite_generators.timeseries
+.. automodule:: dsfaker.generators.timeseries
     :members:
     :undoc-members:
     :show-inheritance:
@@ -46,7 +46,7 @@ Time-series
 Trigonometric
 -------------
 
-.. automodule:: dsfaker.infinite_generators.trigonometric
+.. automodule:: dsfaker.generators.trigonometric
     :members:
     :undoc-members:
     :show-inheritance:

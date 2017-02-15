@@ -4,6 +4,6 @@ python:
   - "3.6"
 
 script:
-  - make
   - make test-with-coverage
   - make doc
+  - codecov
