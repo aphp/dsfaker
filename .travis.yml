@@ -3,7 +3,14 @@ python:
   - "3.5"
   - "3.6"
 
+before_script:
+  - pip install -r requirements.deploy.txt
+
 script:
   - make test-with-coverage
   - make doc
   - codecov
+  - travis-sphinx -s docs build
+
+after_success:
+  - travis-sphinx deploy

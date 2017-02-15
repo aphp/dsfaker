@@ -1,0 +1,2 @@
+codecov==2.0.5
+travis-sphinx==1.4.3
