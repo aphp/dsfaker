@@ -1,8 +1,7 @@
 import numpy
 
-from dsfaker import Generator, InfiniteGenerator, BoundedGenerator
 from dsfaker.distributions import Normal
-from dsfaker.infinite_generators import TimeSeries, RandomNumber
+from dsfaker.generators import TimeSeries, RandomNumber, InfiniteGenerator, BoundedGenerator, Generator
 
 
 class ModulatorLinearInterpolation(InfiniteGenerator):
@@ -17,7 +16,7 @@ class ModulatorLinearInterpolation(InfiniteGenerator):
         A Modulator implementing a linear interpolation for missing values
 
         :param time_series: A TimeSeries instance to be modulated
-        :param base_frequency: The starting frequency (current_frequency = start_frequency)
+        :param start_frequency: The starting frequency (current_frequency = start_frequency)
         :param modulating_generator: The generator to use to modulate the frequency (current_frequency += modulating_generator.get_single())
         :param modulating_step: number of values between two calls to the modulating_generator
         """

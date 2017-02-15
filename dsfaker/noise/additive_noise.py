@@ -1,6 +1,6 @@
 from dsfaker import AddOperator
 from dsfaker.distributions import Normal
-from dsfaker.infinite_generators import RandomNumber
+from dsfaker.generators import RandomNumber
 
 
 class WhiteGaussianNoise(AddOperator):

@@ -17,8 +17,13 @@ doc:
 open-doc-chrome: doc
 	google-chrome-stable docs/_build/html/index.html
 
-test:
+test: install
 	pip install -r requirements.test.txt
+	python -m pytest --cov=dsfaker tests
 
+
+test-with-coverage: install
+	pip install -r requirements.test.txt
+	python -m pytest --cov=dsfaker tests --cov-report=html
 
 all: install

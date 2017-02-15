@@ -1,7 +1,7 @@
 import numpy
 
-from dsfaker import ApplyFunctionOperator
-from dsfaker.infinite_generators import InfiniteGenerator, Autoincrement
+from . import ApplyFunctionOperator
+from . import InfiniteGenerator, Autoincrement
 
 
 class Trigo(ApplyFunctionOperator):

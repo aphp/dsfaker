@@ -1,7 +1,7 @@
 import math
 import numpy
 
-from dsfaker import InfiniteGenerator
+from . import InfiniteGenerator
 
 
 class Serie(InfiniteGenerator):
@@ -10,7 +10,7 @@ class Serie(InfiniteGenerator):
 
 class RepeatPattern(Serie):
     def __init__(self, pattern: numpy.array):
-        self.pattern = pattern
+        self.pattern = numpy.asarray(pattern)
         self.l = len(pattern)
         self.index = 0
 
@@ -37,7 +37,7 @@ class RepeatPattern(Serie):
                 tiles = numpy.tile(self.pattern, nb_tiles)
                 split_index = size - (nb_tiles * self.l) - remaining
                 old_idx = self.index
-                self.index = self.l + split_index + 1
+                self.index = self.l + split_index
                 return numpy.concatenate((self.pattern[old_idx:], tiles[:split_index] if split_index != 0 else tiles))
             else:
                 self.index += size

@@ -1,6 +1,6 @@
 import numpy
 
-from dsfaker import InfiniteGenerator
+from . import InfiniteGenerator
 from dsfaker.distributions import Distribution, DistributionBounded
 from dsfaker.exceptions import NotCompatibleDistributionException
 

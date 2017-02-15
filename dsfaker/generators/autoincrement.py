@@ -1,7 +1,6 @@
 import numpy
 
-from dsfaker import InfiniteGenerator, Generator
-from dsfaker.infinite_generators import RandomNumber
+from . import InfiniteGenerator, RandomNumber
 
 
 class Autoincrement(InfiniteGenerator):
@@ -29,7 +28,6 @@ class AutoincrementRandom(InfiniteGenerator):
 
         :param start: The value to start with
         :param rn: A RandomNumber or one of its child class instance
-        :param dtype: The data type to return
         """
         self.start = start
         self.rn = rn

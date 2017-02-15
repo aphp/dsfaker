@@ -1,4 +1,4 @@
-from dsfaker import InfiniteGenerator
+from . import InfiniteGenerator
 
 
 class TimeSeries(InfiniteGenerator):
