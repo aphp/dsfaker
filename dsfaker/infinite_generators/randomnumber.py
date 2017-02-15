@@ -14,7 +14,7 @@ class RandomNumber(InfiniteGenerator):
         return self.distribution.get()
 
     def get_batch(self, batch_size: int):
-        return numpy.asarray(self.distribution.get(size=(1, batch_size)), dtype=self.dtype)
+        return numpy.asarray(self.distribution.get(size=batch_size), dtype=self.dtype)
 
 
 class RandomNumberBounded(RandomNumber):
@@ -35,4 +35,4 @@ class RandomNumberBounded(RandomNumber):
         return self.distribution.get() * self.coef + self.lb - self.distribution.lb
 
     def get_batch(self, batch_size: int):
-        return numpy.asarray(self.distribution.get(size=(1, batch_size)), dtype=self.dtype) * self.coef + self.lb - self.distribution.lb
+        return numpy.asarray(self.distribution.get(size=batch_size), dtype=self.dtype) * self.coef + self.lb - self.distribution.lb
