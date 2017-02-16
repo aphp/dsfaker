@@ -89,14 +89,15 @@ class BoundedGenerator(Generator):
 
 
 class UniqueValueGenerator(InfiniteGenerator):
-    def __init__(self, value):
+    def __init__(self, value, dtype: numpy.dtype):
         self.value = value
+        self.dtype = dtype
 
     def get_single(self) -> float:
         return self.value
 
     def get_batch(self, batch_size: int) -> numpy.array:
-        return numpy.ones(batch_size) * self.value
+        return numpy.ones(batch_size, dtype=self.dtype) * self.value
 
 
 class ApplyFunctionOperator(Generator):

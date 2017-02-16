@@ -1,10 +1,10 @@
 import numpy
 
-from . import InfiniteGenerator, RandomNumber
+from . import InfiniteGenerator, Generator
 
 
 class Autoincrement(InfiniteGenerator):
-    def __init__(self, start: int, step: int, dtype: numpy.dtype):
+    def __init__(self, start: float, step: float, dtype: numpy.dtype):
         self.start = start
         self.offset = 0
         self.dtype = dtype
@@ -12,7 +12,7 @@ class Autoincrement(InfiniteGenerator):
 
     def get_single(self):
         self.offset += 1
-        return self.start + self.offset * self.step
+        return self.start + (self.offset - 1) * self.step
 
     def get_batch(self, batch_size: int):
         self.offset += batch_size
@@ -22,25 +22,26 @@ class Autoincrement(InfiniteGenerator):
                             dtype=self.dtype)
 
 
-class AutoincrementRandom(InfiniteGenerator):
-    def __init__(self, start: int, rn: RandomNumber):
+class AutoincrementWithGenerator(InfiniteGenerator):
+    def __init__(self, start: float, generator: Generator):
         """
 
         :param start: The value to start with
-        :param rn: A RandomNumber or one of its child class instance
+        :param generator: A Generator
         """
         self.start = start
-        self.rn = rn
+        self.generator = generator
         self.current_val = start
 
     def get_single(self):
-        tmp = self.rn.get_single()
+        tmp = self.generator.get_single()
         old_val = self.current_val
         self.current_val += tmp
         return old_val
 
     def get_batch(self, batch_size: int):
-        random_incremental = self.current_val + numpy.cumsum(self.rn.get_batch(batch_size=batch_size))
+        random_incremental = self.current_val + numpy.cumsum(self.generator.get_batch(batch_size=batch_size))
+        random_incremental = numpy.insert(random_incremental, 0, self.current_val)
         self.current_val = random_incremental[-1]
-        return random_incremental
+        return random_incremental[:-1]
 
