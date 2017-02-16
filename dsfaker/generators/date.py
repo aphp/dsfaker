@@ -8,7 +8,6 @@ class RandomDatetime(InfiniteGenerator):
         """
         A timezone-aware class to generate datetimes between start and end (inclusive) following a certain distribution
 
-        :param distribution:
         :param start: The starting date (inclusive)
         :param end: The ending date (inclusive)
         :param unit: The time unit to use for the distribution ('Y', 'M', 'W', 'D', 'h', 'm', 's', 'us', 'ms', 'ns', 'ps', 'fs', 'as')

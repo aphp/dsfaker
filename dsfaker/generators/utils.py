@@ -46,10 +46,10 @@ class ScalingOperator(BoundedGenerator):
         self.dtype = dtype
 
     def get_single(self):
-        return self.generator.get_single() * self.coef - self.mid * self.coef + self.mid
+        return self.generator.get_single() * self.coef - (self.gen_mid * self.coef) + self.mid
 
     def get_batch(self, batch_size: int):
-        return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype) * self.coef - (self.mid * self.coef) + self.mid
+        return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype) * self.coef - (self.gen_mid * self.coef) + self.mid
 
 
 class ApplyFunctionOperator(Generator):

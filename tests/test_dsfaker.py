@@ -3,8 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator
-from dsfaker.generators.distributions import Normal
+from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator, RandomDatetime
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import  RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
@@ -150,6 +149,18 @@ class TestScalingOperator:
             assert n.get_single() == 0
             assert n.get_single() == -10
             assert n.get_single() == 0
+
+    def test_values_batch(self):
+        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        n = ScalingOperator(generator=triangular_fun, lb=-10, ub=10, dtype=np.float32)
+        tmp = [10, 0, -10, 0]
+        count = 0
+        for i in range(10):
+            nb = np.random.randint(2, 1000)
+            values = n.get_batch(nb)
+            for j, val in enumerate(values):
+                assert val == tmp[(count + j)%4]
+            count += nb
 
 
 class TestApplyFunctionOperator:
@@ -326,7 +337,27 @@ class TestTimeSeries:
                 assert v == 42
 
 
-class TestRandomNumber:
-    def test_type(self):
-        distrib = Normal()
-        assert distrib.get_single()
+class TestDate:
+    def test_values_single(self):
+        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        rd = RandomDatetime(generator=triangular_fun, start=np.datetime64("1950"), end=np.datetime64("2042"), unit="Y")
+        for i in range(10000):
+            assert rd.get_single() == np.datetime64('2042')
+            assert rd.get_single() == np.datetime64('1996')
+            assert rd.get_single() == np.datetime64('1950')
+            assert rd.get_single() == np.datetime64('1996')
+
+    def test_values_batch(self):
+        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        rd = RandomDatetime(generator=triangular_fun, start=np.datetime64("1950"), end=np.datetime64("2042"), unit="Y")
+        tmp = [np.datetime64('2042'), np.datetime64('1996'), np.datetime64('1950'), np.datetime64('1996')]
+        count = 0
+        for i in range(10):
+            nb = np.random.randint(2, 1000)
+            values = rd.get_batch(nb)
+            for j, val in enumerate(values):
+                assert val == tmp[(count + j)%4]
+            count += nb
+
+
+
