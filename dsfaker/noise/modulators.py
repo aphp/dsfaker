@@ -1,13 +1,13 @@
 import numpy
 
-from dsfaker.generators import Normal, TimeSeries, InfiniteGenerator, BoundedGenerator, Generator
+from dsfaker.generators import Normal, TimeSeries, InfiniteGenerator,   Generator, BoundingOperator
 
 
 class ModulatorLinearInterpolation(InfiniteGenerator):
     def __init__(self,
                  time_series: TimeSeries,
                  start_frequency: float=1,
-                 modulating_generator: Generator=BoundedGenerator(generator=Normal(std=0.1),
+                 modulating_generator: Generator=BoundingOperator(generator=Normal(std=0.1),
                                                                   lb=1/3,
                                                                   ub=3),
                  modulating_step: int=10):

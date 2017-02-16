@@ -60,6 +60,12 @@ class Generator():
         return XorOperator(self, other)
 
 
+class BoundedGenerator(Generator):
+    bounded = True
+    lb = None
+    ub = None
+
+
 class FiniteGenerator(Generator):
     finite = True
 
@@ -142,7 +148,7 @@ class Distribution(Generator):
     bounded = None
     continuous = None
     lb = None
-    up = None
+    ub = None
 
     def _get(self, size=None):
         raise NotImplementedError("_get not implemented!")

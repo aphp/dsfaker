@@ -3,13 +3,13 @@ from decimal import Decimal
 
 import pytest
 
-from dsfaker.generators import Generator, FiniteGenerator
+from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator
 from dsfaker.generators.distributions import Normal
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import  RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
 from dsfaker.generators.timeseries import  TimeSeries
-from dsfaker.generators.utils import ConstantValueGenerator, BoundedGenerator, ApplyFunctionOperator, AbsoluteOperator
+from dsfaker.generators.utils import ConstantValueGenerator, BoundingOperator, ApplyFunctionOperator, AbsoluteOperator
 
 
 class TestGenerator:
@@ -114,7 +114,7 @@ class TestFiniteGenerator:
             fg.get_all()
 
 
-class TestBoundedGenerator:
+class TestBoundingOperator:
     def test_values_single(self):
         n = Sin() * ConstantValueGenerator(50, dtype=np.uint16)
         lb = 0
@@ -122,7 +122,7 @@ class TestBoundedGenerator:
         while lb >= ub:
             lb = np.random.randint(-20, 20)
             ub = np.random.randint(-20, 20)
-        bg = BoundedGenerator(n, lb=lb, ub=ub)
+        bg = BoundingOperator(n, lb=lb, ub=ub)
         for i in range(10000):
             assert lb <= bg.get_single() <= ub
 
@@ -133,12 +133,23 @@ class TestBoundedGenerator:
         while lb >= ub:
             lb = np.random.randint(-20, 20)
             ub = np.random.randint(-20, 20)
-        bg = BoundedGenerator(n, lb=lb, ub=ub)
+        bg = BoundingOperator(n, lb=lb, ub=ub)
         for i in range(10):
             nb = np.random.randint(2, 10000)
             values = bg.get_batch(nb)
             for val in values:
                 assert lb <= val <= ub
+
+
+class TestScalingOperator:
+    def test_values_single(self):
+        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        n = ScalingOperator(generator=triangular_fun, lb=-10, ub=10, dtype=np.float32)
+        for _ in range(10000):
+            assert n.get_single() == 10
+            assert n.get_single() == 0
+            assert n.get_single() == -10
+            assert n.get_single() == 0
 
 
 class TestApplyFunctionOperator:

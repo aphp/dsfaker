@@ -1,6 +1,14 @@
 Generators
 ==========
 
+Base
+----
+
+.. automodule:: dsfaker.generators.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Autoincrement
 -------------
 
@@ -13,14 +21,6 @@ Date / Datetime
 ---------------
 
 .. automodule:: dsfaker.generators.date
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Random Number
--------------
-
-.. automodule:: dsfaker.generators.randomnumber
     :members:
     :undoc-members:
     :show-inheritance:
@@ -47,6 +47,23 @@ Trigonometric
 -------------
 
 .. automodule:: dsfaker.generators.trigonometric
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Utils
+-----
+
+.. automodule:: dsfaker.generators.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Probability distributions
+-------------------------
+
+.. automodule:: dsfaker.generators.distributions
     :members:
     :undoc-members:
     :show-inheritance:

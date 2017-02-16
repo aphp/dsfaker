@@ -1,2 +1,2 @@
-class NotCompatibleDistributionException(Exception):
+class NotCompatibleGeneratorException(Exception):
     pass

@@ -1,7 +1,7 @@
 import numpy
 
-from dsfaker.exceptions import NotCompatibleDistributionException
-from . import Distribution, InfiniteGenerator, Generator
+from dsfaker.exceptions import NotCompatibleGeneratorException
+from . import BoundedGenerator, InfiniteGenerator, Generator, DistributionBounded
 
 
 class ConstantValueGenerator(InfiniteGenerator):
@@ -16,7 +16,7 @@ class ConstantValueGenerator(InfiniteGenerator):
         return numpy.ones(batch_size, dtype=self.dtype) * self.value
 
 
-class BoundedGenerator(Generator):
+class BoundingOperator(BoundedGenerator):
     def __init__(self, generator: Generator, lb: float, ub: float):
         self.generator = generator
         self.lb = lb
@@ -29,23 +29,27 @@ class BoundedGenerator(Generator):
         return numpy.clip(self.generator.get_batch(batch_size=batch_size), self.lb, self.ub)
 
 
-class ScaleOperator(Generator):
-    def __init__(self, distribution: Distribution, lb: int, ub: int, dtype: numpy.dtype=None):
-        if distribution.bounded is False:
-            raise NotCompatibleDistributionException("BoundedRandomNumber need a BoundedDistribution.")
+class ScalingOperator(BoundedGenerator):
+    def __init__(self, generator: BoundedGenerator, lb: float, ub: float, dtype: numpy.dtype=None):
         if lb >= ub:
-            raise ValueError("lb should be less than up")
+            raise ValueError("lb should be less than ub")
+
+        if not isinstance(generator, BoundedGenerator):
+            raise NotCompatibleGeneratorException("ScalingOperator needs a BoundedGenerator.")
+
+        self.generator = generator
         self.lb = lb
         self.ub = ub
-        self.distribution = distribution
+        self.mid = ub - (ub - lb) / 2
+        self.gen_mid =  self.generator.ub - (self.generator.ub - self.generator.lb) / 2
+        self.coef = (ub - lb) / (self.generator.ub - self.generator.lb)
         self.dtype = dtype
-        self.coef = (ub - lb) / (self.distribution.up - self.distribution.lb)
 
     def get_single(self):
-        return self.distribution._get() * self.coef + self.lb - self.distribution.lb
+        return self.generator.get_single() * self.coef - self.mid * self.coef + self.mid
 
     def get_batch(self, batch_size: int):
-        return numpy.asarray(self.distribution._get(size=batch_size), dtype=self.dtype) * self.coef + self.lb - self.distribution.lb
+        return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype) * self.coef - (self.mid * self.coef) + self.mid
 
 
 class ApplyFunctionOperator(Generator):

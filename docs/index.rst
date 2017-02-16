@@ -15,7 +15,7 @@ DSFaker aims at providing data scientists with functions for generating and stre
 - Random (unique or not) subsets of data from existing provided dataset
 - Random (unique or not) pick-up of data from existing provided dataset
 
-To generate such data, you can specify :ref:`the distribution you want amongst the ones provided by numpy.random <dsfaker-distributions>`.
+To generate such data, you can specify the distribution you want amongst the ones provided by numpy.random.
 Or you can also implement your own distribution to generate data.
 
 
@@ -104,6 +104,5 @@ User guide
    :maxdepth: 3
 
    overview
-   dsfaker.distributions
    dsfaker.generators
    dsfaker.noise

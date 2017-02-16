@@ -1,10 +1,10 @@
 import numpy
 
-from . import DistributionBounded, InfiniteGenerator, ScaleOperator
+from . import InfiniteGenerator, ScalingOperator, BoundedGenerator
 
 
 class RandomDatetime(InfiniteGenerator):
-    def __init__(self, distribution: DistributionBounded, start: numpy.datetime64, end: numpy.datetime64, unit):
+    def __init__(self, generator: BoundedGenerator, start: numpy.datetime64, end: numpy.datetime64, unit):
         """
         A timezone-aware class to generate datetimes between start and end (inclusive) following a certain distribution
 
@@ -13,7 +13,7 @@ class RandomDatetime(InfiniteGenerator):
         :param end: The ending date (inclusive)
         :param unit: The time unit to use for the distribution ('Y', 'M', 'W', 'D', 'h', 'm', 's', 'us', 'ms', 'ns', 'ps', 'fs', 'as')
         """
-        self.rnb = ScaleOperator(distribution=distribution, lb=0, ub=(end-start) / numpy.timedelta64(1, unit), dtype=numpy.float64)
+        self.rnb = ScalingOperator(generator=generator, lb=0, ub=(end - start) / numpy.timedelta64(1, unit), dtype=numpy.float64)
         self.start = start
         self.end = end
         self.unit = unit

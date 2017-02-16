@@ -1,6 +1,6 @@
 import numpy
 
-from . import ApplyFunctionOperator, InfiniteGenerator, Autoincrement
+from . import ApplyFunctionOperator, BoundedGenerator, InfiniteGenerator, Autoincrement
 
 
 class Trigo(ApplyFunctionOperator):
@@ -8,9 +8,11 @@ class Trigo(ApplyFunctionOperator):
         super().__init__(function, generator)
 
 
-class Sin(Trigo):
+class Sin(ApplyFunctionOperator, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.sin, generator)
+        self.lb = 1.0
+        self.ub = -1.0
 
 
 class Sinh(Trigo):
@@ -18,9 +20,11 @@ class Sinh(Trigo):
         super().__init__(numpy.sinh, generator)
 
 
-class Cos(Trigo):
+class Cos(Trigo, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.cos, generator)
+        self.lb = 1.0
+        self.ub = -1.0
 
 
 class Cosh(Trigo):
@@ -33,6 +37,8 @@ class Tan(Trigo):
         super().__init__(numpy.tan, generator)
 
 
-class Tanh(Trigo):
+class Tanh(Trigo, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.tanh, generator)
+        self.lb = 1.0
+        self.ub = -1.0
