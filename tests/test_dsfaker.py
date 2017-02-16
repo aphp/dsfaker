@@ -1,7 +1,154 @@
+from operator import xor
+
 import numpy as np
 from decimal import Decimal
 
-from dsfaker.generators import Autoincrement, AutoincrementWithGenerator, RepeatPattern, RandomNumber, UniqueValueGenerator
+import pytest
+
+from dsfaker.generators import Autoincrement, AutoincrementWithGenerator, RepeatPattern, RandomNumber, ConstantValueGenerator, \
+    Generator, FiniteGenerator, InfiniteGenerator, BoundedGenerator, Sin, ApplyFunctionOperator, Cos, AbsoluteOperator
+
+
+class TestGenerator:
+    def test_raises(self):
+        g = Generator()
+        with pytest.raises(NotImplementedError):
+            g.get_single()
+        with pytest.raises(NotImplementedError):
+            g.get_batch(200)
+
+    def _get_two_unique_gen(self):
+        va = np.random.randint(-1000, +1000, dtype=np.int32)
+        vb = np.random.randint(0, 10000, dtype=np.int32)
+        a = ConstantValueGenerator(va, dtype=np.int64)
+        b = ConstantValueGenerator(vb, dtype=np.int64)
+        return va, vb, a, b
+
+    def test_add_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a + b
+        assert c.get_single() == va + vb
+
+    def test_sub_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a - b
+        assert c.get_single() == va - vb
+
+    def test_truediv_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a / b
+        assert c.get_single() == va / vb
+
+    def test_floordiv_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a // b
+        assert c.get_single() == va // vb
+
+    def test_mul_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a * b
+        assert c.get_single() == va * vb
+
+    def test_pow_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a ** b
+        assert c.get_single() == va ** vb
+
+    def test_mod_op(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        c = a % b
+        assert c.get_single() == va % vb
+
+    def _get_two_unique_gen_binary(self):
+        va = np.random.randint(0, 2, dtype=np.int32)
+        vb = np.random.randint(0, 2, dtype=np.int32)
+        a = ConstantValueGenerator(va, dtype=np.int64)
+        b = ConstantValueGenerator(vb, dtype=np.int64)
+        return va, vb, a, b
+
+    def test_and_op(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        c = a & b
+        assert c.get_single() == va & vb
+
+    def test_or_op(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        c = a | b
+        assert c.get_single() == va | vb
+
+    def test_xor_op(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        c = a ^ b
+        assert c.get_single() == va ^ vb
+
+
+class TestFiniteGenerator:
+    def test_raises(self):
+        fg = FiniteGenerator()
+        with pytest.raises(NotImplementedError):
+            fg.get_all()
+
+
+class TestBoundedGenerator:
+    def test_values_single(self):
+        n = Sin() * ConstantValueGenerator(50, dtype=np.uint16)
+        lb = 0
+        ub = 0
+        while lb >= ub:
+            lb = np.random.randint(-20, 20)
+            ub = np.random.randint(-20, 20)
+        bg = BoundedGenerator(n, lb=lb, ub=ub)
+        for i in range(10000):
+            assert lb <= bg.get_single() <= ub
+
+
+class TestApplyFunctionOperator:
+    def _get_afo(self, fun):
+        generator = Autoincrement()
+        afo = ApplyFunctionOperator(function=fun, generator=generator)
+        return afo
+
+    def test_type(self):
+        afo = self._get_afo(lambda x: 2*x)
+        assert afo.get_single() == 0
+        assert isinstance(afo.get_batch(9), np.ndarray)
+
+    def test_shape(self):
+        afo = self._get_afo(lambda x: 2*x)
+        nb = np.random.randint(2, 10000)
+        assert afo.get_batch(nb).shape == (nb,)
+
+    def test_values_single(self):
+        afo = self._get_afo(lambda x: 4*x + 2)
+        for i in range(10000):
+            assert afo.get_single() == 4*i + 2
+
+    def test_values_batch(self):
+        afo = self._get_afo(lambda x: 4*x + 2)
+        count = 0
+        for i in range(10):
+            nb = np.random.randint(2, 10000)
+            values = afo.get_batch(nb)
+            for i, val in enumerate(values):
+                assert val == (count + i) * 4 + 2
+            count += nb
+
+
+class TestAbsoluteOperator:
+    def test_values_single(self):
+        n = Cos() * ConstantValueGenerator(50, dtype=np.uint16)
+        ao = AbsoluteOperator(n)
+        for i in range(10000):
+            assert ao.get_single() >= 0
+    def test_values_batch(self):
+        n = Cos() * ConstantValueGenerator(50, dtype=np.uint16)
+        ao = AbsoluteOperator(n)
+        for i in range(10):
+            nb = np.random.randint(2, 10000)
+            values = ao.get_batch(nb)
+            for val in values:
+                assert val >= 0
+
 
 
 class TestRepeatPattern:
@@ -71,7 +218,7 @@ class TestAutoincrementRandom:
     def _get_gen(self):
         start = np.random.randint(-50, +50)
         step = np.random.randint(-10, 10)
-        gen = UniqueValueGenerator(step, dtype=np.int32)
+        gen = ConstantValueGenerator(step, dtype=np.int32)
         ai = AutoincrementWithGenerator(start=start, generator=gen)
         return start, step, ai
 

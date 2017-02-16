@@ -88,7 +88,7 @@ class BoundedGenerator(Generator):
         return numpy.clip(self.generator.get_batch(batch_size=batch_size), self.lb, self.ub)
 
 
-class UniqueValueGenerator(InfiniteGenerator):
+class ConstantValueGenerator(InfiniteGenerator):
     def __init__(self, value, dtype: numpy.dtype):
         self.value = value
         self.dtype = dtype

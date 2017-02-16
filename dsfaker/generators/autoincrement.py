@@ -4,7 +4,7 @@ from . import InfiniteGenerator, Generator
 
 
 class Autoincrement(InfiniteGenerator):
-    def __init__(self, start: float, step: float, dtype: numpy.dtype):
+    def __init__(self, start: float=0.0, step: float=1.0, dtype: numpy.dtype=numpy.uint64):
         self.start = start
         self.offset = 0
         self.dtype = dtype
