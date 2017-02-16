@@ -13,7 +13,6 @@ setup(name='dsfaker',
       # author_email='wind@aphp.fr',
       # license='MIT',
       packages=['dsfaker',
-                'dsfaker.distributions',
                 'dsfaker.generators',
                 'dsfaker.noise'],
       install_requires=[

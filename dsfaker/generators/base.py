@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from functools import reduce
 import operator
+from typing import Iterable
 
 import numpy
 
@@ -13,7 +14,7 @@ class Generator():
         """
         raise NotImplementedError("get_single not implemented")
 
-    def stream_single(self) -> float:
+    def stream_single(self) -> Iterable:
         while True:
             yield self.get_single()
 
@@ -24,7 +25,7 @@ class Generator():
         """
         raise NotImplementedError("get_batch not implemented")
 
-    def stream_batch(self, batch_size: int) -> numpy.array:
+    def stream_batch(self, batch_size: int) -> Iterable:
         while True:
             yield self.get_batch(batch_size=batch_size)
 
@@ -73,48 +74,6 @@ class FiniteGenerator(Generator):
 class InfiniteGenerator(Generator):
     finite = False
     pass
-
-
-class BoundedGenerator(Generator):
-    def __init__(self, generator: Generator, lb: float, ub: float):
-        self.generator = generator
-        self.lb = lb
-        self.ub = ub
-
-    def get_single(self):
-        return numpy.clip(self.generator.get_single(), self.lb, self.ub)
-
-    def get_batch(self, batch_size: int):
-        return numpy.clip(self.generator.get_batch(batch_size=batch_size), self.lb, self.ub)
-
-
-class ConstantValueGenerator(InfiniteGenerator):
-    def __init__(self, value, dtype: numpy.dtype):
-        self.value = value
-        self.dtype = dtype
-
-    def get_single(self) -> float:
-        return self.value
-
-    def get_batch(self, batch_size: int) -> numpy.array:
-        return numpy.ones(batch_size, dtype=self.dtype) * self.value
-
-
-class ApplyFunctionOperator(Generator):
-    def __init__(self, function, generator: Generator):
-        self.function = function
-        self.generator = generator
-
-    def get_single(self) -> float:
-        return self.function(self.generator.get_single())
-
-    def get_batch(self, batch_size: int) -> numpy.array:
-        return self.function(self.generator.get_batch(batch_size=batch_size))
-
-
-class AbsoluteOperator(ApplyFunctionOperator):
-    def __init__(self, generator):
-        super().__init__(numpy.absolute, generator)
 
 
 class ReduceOperator(Generator):
@@ -177,3 +136,32 @@ class OrOperator(ReduceOperator):
 class XorOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.xor)
+
+
+class Distribution(Generator):
+    bounded = None
+    continuous = None
+    lb = None
+    up = None
+
+    def _get(self, size=None):
+        raise NotImplementedError("_get not implemented!")
+
+    def get_single(self) -> float:
+        return self._get()
+
+    def get_batch(self, batch_size: int) -> numpy.array:
+        return self._get(size=batch_size)
+
+
+class DistributionUnbounded(Distribution):
+    bounded = False
+
+
+class DistributionNonNegative(Distribution):
+    bounded = True
+    lb = 0
+
+
+class DistributionBounded(Distribution):
+    bounded = True

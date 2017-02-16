@@ -1,8 +1,6 @@
-from dsfaker import AddOperator
-from dsfaker.distributions import Normal
-from dsfaker.generators import RandomNumber
+from dsfaker.generators import AddOperator, Normal
 
 
 class WhiteGaussianNoise(AddOperator):
     def __init__(self, generator, distribution=Normal()):
-        super().__init__(generator, RandomNumber(distribution=distribution))
+        super().__init__(generator, distribution)

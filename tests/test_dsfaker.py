@@ -1,12 +1,15 @@
-from operator import xor
-
 import numpy as np
 from decimal import Decimal
 
 import pytest
 
-from dsfaker.generators import Autoincrement, AutoincrementWithGenerator, RepeatPattern, RandomNumber, ConstantValueGenerator, \
-    Generator, FiniteGenerator, InfiniteGenerator, BoundedGenerator, Sin, ApplyFunctionOperator, Cos, AbsoluteOperator
+from dsfaker.generators import Generator, FiniteGenerator
+from dsfaker.generators.distributions import Normal
+from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
+from dsfaker.generators.series import  RepeatPattern
+from dsfaker.generators.trigonometric import Sin, Cos
+from dsfaker.generators.timeseries import  TimeSeries
+from dsfaker.generators.utils import ConstantValueGenerator, BoundedGenerator, ApplyFunctionOperator, AbsoluteOperator
 
 
 class TestGenerator:
@@ -16,6 +19,28 @@ class TestGenerator:
             g.get_single()
         with pytest.raises(NotImplementedError):
             g.get_batch(200)
+
+    def test_stream_single(self):
+        g = Autoincrement()
+        c = 0
+        for i in range(1000):
+            for val in g.stream_single():
+                assert val == c
+                c += 1
+                if c > 100000:
+                    break
+
+    def test_stream_batch(self):
+        g = Autoincrement()
+        c = 0
+        for i in range(10):
+            nb = np.random.randint(2, 1000)
+            for values in g.stream_batch(nb):
+                for val in values:
+                    assert val == c
+                    c += 1
+                if c > 100000:
+                    break
 
     def _get_two_unique_gen(self):
         va = np.random.randint(-1000, +1000, dtype=np.int32)
@@ -101,6 +126,20 @@ class TestBoundedGenerator:
         for i in range(10000):
             assert lb <= bg.get_single() <= ub
 
+    def test_values_batch(self):
+        n = Sin() * ConstantValueGenerator(50, dtype=np.uint16)
+        lb = 0
+        ub = 0
+        while lb >= ub:
+            lb = np.random.randint(-20, 20)
+            ub = np.random.randint(-20, 20)
+        bg = BoundedGenerator(n, lb=lb, ub=ub)
+        for i in range(10):
+            nb = np.random.randint(2, 10000)
+            values = bg.get_batch(nb)
+            for val in values:
+                assert lb <= val <= ub
+
 
 class TestApplyFunctionOperator:
     def _get_afo(self, fun):
@@ -109,28 +148,28 @@ class TestApplyFunctionOperator:
         return afo
 
     def test_type(self):
-        afo = self._get_afo(lambda x: 2*x)
+        afo = self._get_afo(lambda x: 2 * x)
         assert afo.get_single() == 0
         assert isinstance(afo.get_batch(9), np.ndarray)
 
     def test_shape(self):
-        afo = self._get_afo(lambda x: 2*x)
+        afo = self._get_afo(lambda x: 2 * x)
         nb = np.random.randint(2, 10000)
         assert afo.get_batch(nb).shape == (nb,)
 
     def test_values_single(self):
-        afo = self._get_afo(lambda x: 4*x + 2)
+        afo = self._get_afo(lambda x: 4 * x + 2)
         for i in range(10000):
-            assert afo.get_single() == 4*i + 2
+            assert afo.get_single() == 4 * i + 2
 
     def test_values_batch(self):
-        afo = self._get_afo(lambda x: 4*x + 2)
+        afo = self._get_afo(lambda x: 4 * x + 2)
         count = 0
         for i in range(10):
             nb = np.random.randint(2, 10000)
             values = afo.get_batch(nb)
-            for i, val in enumerate(values):
-                assert val == (count + i) * 4 + 2
+            for j, val in enumerate(values):
+                assert val == (count + j) * 4 + 2
             count += nb
 
 
@@ -140,6 +179,7 @@ class TestAbsoluteOperator:
         ao = AbsoluteOperator(n)
         for i in range(10000):
             assert ao.get_single() >= 0
+
     def test_values_batch(self):
         n = Cos() * ConstantValueGenerator(50, dtype=np.uint16)
         ao = AbsoluteOperator(n)
@@ -150,32 +190,31 @@ class TestAbsoluteOperator:
                 assert val >= 0
 
 
-
 class TestRepeatPattern:
     def test_type(self):
-        rp = RepeatPattern([0,1,2,3,4,5,6,7,8,9])
+        rp = RepeatPattern([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         assert rp.get_single() == 0
         assert isinstance(rp.get_batch(9), np.ndarray)
 
     def test_shape(self):
-        rp = RepeatPattern([0,1,2,3,4,5,6,7,8,9])
+        rp = RepeatPattern([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         nb = np.random.randint(2, 10000)
         assert rp.get_batch(nb).shape == (nb,)
 
     def test_len(self):
-        rp = RepeatPattern([0,1,2,3,4,5,6,7,8,9])
+        rp = RepeatPattern([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         for i in range(10):
             nb = np.random.randint(2, 100000)
             print(nb)
             assert len(rp.get_batch(nb)) == nb
 
     def test_values_single(self):
-        rp = RepeatPattern([0,1,2,3,4,5,6,7,8,9])
+        rp = RepeatPattern([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         for i in range(10000):
             assert rp.get_single() == i % 10
 
     def test_values_batch(self):
-        rp = RepeatPattern([0,1,2,3,4,5,6,7,8,9])
+        rp = RepeatPattern([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         idx = 0
         for _ in range(10):
             nb = np.random.randint(2, 10000)
@@ -208,8 +247,8 @@ class TestAutoincrement:
         for i in range(10):
             nb = np.random.randint(2, 10000)
             values = ai.get_batch(nb)
-            for i, val in enumerate(values):
-                d = (Decimal(-4.2) + ((Decimal(count + i)) * Decimal(4.2)))
+            for j, val in enumerate(values):
+                d = (Decimal(-4.2) + ((Decimal(count + j)) * Decimal(4.2)))
                 assert round(Decimal(val), 1) == round(d, 1)
             count += nb
 
@@ -244,7 +283,39 @@ class TestAutoincrementRandom:
         for i in range(10):
             nb = np.random.randint(2, 10000)
             values = ai.get_batch(nb)
-            for i, val in enumerate(values):
-                assert val == start + (count + i) * step
+            for j, val in enumerate(values):
+                assert val == start + (count + j) * step
             count += nb
 
+
+class TestTimeSeries:
+    def _get_ts(self):
+        time = Autoincrement()
+        data = ConstantValueGenerator(value=42, dtype=np.uint16)
+        return TimeSeries(time_gen=time, data_gen=data)
+
+    def test_type(self):
+        ts = self._get_ts()
+        assert ts.get_single() == (0, 42)
+        assert isinstance(ts.get_batch(9)[0], np.ndarray)
+        assert isinstance(ts.get_batch(9)[1], np.ndarray)
+
+    def test_values_single(self):
+        ts = self._get_ts()
+        for i in range(1000):
+            assert ts.get_single() == (i, 42)
+
+    def test_values_batch(self):
+        ts = self._get_ts()
+        for i in range(10):
+            tt, vv = ts.get_batch(100)
+            for j, t in enumerate(tt):
+                assert t == 100 * i + j
+            for j, v in enumerate(vv):
+                assert v == 42
+
+
+class TestRandomNumber:
+    def test_type(self):
+        distrib = Normal()
+        assert distrib.get_single()

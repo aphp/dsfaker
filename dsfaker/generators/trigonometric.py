@@ -1,7 +1,6 @@
 import numpy
 
-from . import ApplyFunctionOperator
-from . import InfiniteGenerator, Autoincrement
+from . import ApplyFunctionOperator, InfiniteGenerator, Autoincrement
 
 
 class Trigo(ApplyFunctionOperator):

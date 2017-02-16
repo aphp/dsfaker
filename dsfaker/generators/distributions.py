@@ -4,10 +4,7 @@ import numpy
 from numpy import ndarray
 from numpy.random.mtrand import RandomState
 
-from .base import DistributionNonNegative
-from .base import DistributionBounded
-
-from .base import DistributionUnbounded
+from . import DistributionNonNegative, DistributionBounded, DistributionUnbounded
 
 
 class Beta(DistributionBounded):
@@ -36,7 +33,7 @@ class Beta(DistributionBounded):
         self.b = b
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.beta(a=self.a,
                             b=self.b,
                             size=size)
@@ -62,7 +59,7 @@ class Binomial(DistributionNonNegative):
         self.p = p
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.binomial(n=self.n,
                                 p=self.p,
                                 size=size)
@@ -88,7 +85,7 @@ class BinomialNegative(DistributionNonNegative):
         self.p = p
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.negative_binomial(n=self.n,
                                          p=self.p,
                                          size=size)
@@ -109,7 +106,7 @@ class CauchyStandard(DistributionUnbounded):
     def __init__(self, seed=None):
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.standard_cauchy(size=size)
 
 
@@ -131,7 +128,7 @@ class Chisquare(DistributionNonNegative):
         self.k = k
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.chisquare(df=self.k,
                                  size=size)
 
@@ -156,7 +153,7 @@ class ChisquareNonCentral(DistributionNonNegative):
         self.nonc = nonc
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.noncentral_chisquare(df=self.k,
                                             nonc=self.nonc,
                                             size=size)
@@ -180,7 +177,7 @@ class Dirichlet(DistributionNonNegative):
         self.alpha = alpha
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.dirichlet(alpha=self.alpha,
                                  size=size)
 
@@ -203,7 +200,7 @@ class Exponential(DistributionNonNegative):
         self.beta = beta
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.exponential(scale=self.beta,
                                    size=size)
 
@@ -224,7 +221,7 @@ class F(DistributionNonNegative):
         self.dfden = dfden
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.f(dfnum=self.dfnum,
                          dfden=self.dfden,
                          size=size)
@@ -248,7 +245,7 @@ class FNonCentral(DistributionNonNegative):
         self.nonc = nonc
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.noncentral_f(dfnum=self.dfnum,
                                     dfden=self.dfden,
                                     nonc=self.nonc,
@@ -275,7 +272,7 @@ class Gamma(DistributionNonNegative):
         self.theta = theta
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.gamma(shape=self.k,
                              scale=self.theta,
                              size=size)
@@ -302,7 +299,7 @@ class Geometric(DistributionNonNegative):
         self.p = p
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.geometric(p=self.p,
                                  size=size)
 
@@ -327,7 +324,7 @@ class Gumbel(DistributionUnbounded):
         self.beta = beta
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.gumbel(loc=self.mu,
                               scale=self.beta,
                               size=size)
@@ -355,7 +352,7 @@ class Hypergeometric(DistributionNonNegative):
         self.N = N
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.hypergeometric(ngood=self.n,
                                       nbad=self.m,
                                       nsample=self.N,
@@ -382,7 +379,7 @@ class Laplace(DistributionUnbounded):
         self.beta = beta
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.laplace(loc=self.mu,
                                scale=self.beta,
                                size=size)
@@ -408,7 +405,7 @@ class Logistic(DistributionUnbounded):
         self.beta = beta
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.logistic(loc=self.mu,
                                 scale=self.beta,
                                 size=size)
@@ -434,7 +431,7 @@ class Lognormal(DistributionNonNegative):
         self.sigma = sigma
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.lognormal(mean=self.mu,
                                  sigma=self.sigma,
                                  size=size)
@@ -456,7 +453,7 @@ class Multinomial(DistributionNonNegative):
         self.pvals = pvals
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.multinomial(n=self.n,
                                    pvals=self.pvals,
                                    size=size)
@@ -482,7 +479,7 @@ class Normal(DistributionUnbounded):
         self.std = std
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.normal(loc=self.mean, scale=self.std, size=size)
 
 
@@ -502,7 +499,7 @@ class NormalMultivariate(DistributionUnbounded):
         self.cov = cov
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.multivariate_normal(mean=self.mu,
                                            cov=self.cov,
                                            size=size)
@@ -527,7 +524,7 @@ class Pareto(DistributionNonNegative):
         self.a = a
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.pareto(a=self.a,
                               size=size)
 
@@ -550,7 +547,7 @@ class Poisson(DistributionNonNegative):
         self.lam = lam
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.poisson(lam=self.lam,
                                size=size)
 
@@ -575,7 +572,7 @@ class Power(DistributionBounded):
         self.a = a
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.power(a=self.a,
                              size=size)
 
@@ -596,7 +593,7 @@ class Randint(DistributionBounded):
         self.ub = ub
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.randint(low=self.lb,
                                high=self.ub,
                                size=size)
@@ -615,7 +612,7 @@ class RandomSample(DistributionBounded):
     def __init__(self, seed=None):
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.random_sample(size=size)
 
 
@@ -637,7 +634,7 @@ class Rayleigh(DistributionNonNegative):
         self.sigma = sigma
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.rayleigh(scale=self.sigma,
                                 size=size)
 
@@ -664,7 +661,7 @@ class Triangular(DistributionBounded):
         self.ub = ub
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.triangular(left=self.lb,
                                   mode=self.step,
                                   right=self.ub,
@@ -691,7 +688,7 @@ class Uniform(DistributionBounded):
         self.ub = ub
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.uniform(low=self.lb,
                                high=self.ub,
                                size=size)
@@ -719,7 +716,7 @@ class Vonmises(DistributionBounded):
         self.kappa = kappa
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.vonmises(mu=self.mu,
                                 kappa=self.kappa,
                                 size=size)
@@ -745,7 +742,7 @@ class Wald(DistributionNonNegative):
         self.lam = lam
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.wald(mean=self.mu,
                             scale=self.lam,
                             size=size)
@@ -769,7 +766,7 @@ class Weibull(DistributionNonNegative):
         self.a = a
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.weibull(a=self.a,
                                size=size)
 
@@ -793,6 +790,6 @@ class Zipf(DistributionNonNegative):
         self.a = a
         self.rs = RandomState(seed=seed)
 
-    def get(self, size=None):
+    def _get(self, size=None):
         return self.rs.zipf(a=self.a,
                             size=size)

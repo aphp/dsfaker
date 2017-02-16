@@ -1,7 +1,6 @@
 import numpy
 
-from dsfaker.distributions import DistributionBounded
-from . import RandomNumberBounded, InfiniteGenerator
+from . import DistributionBounded, InfiniteGenerator, ScaleOperator
 
 
 class RandomDatetime(InfiniteGenerator):
@@ -14,7 +13,7 @@ class RandomDatetime(InfiniteGenerator):
         :param end: The ending date (inclusive)
         :param unit: The time unit to use for the distribution ('Y', 'M', 'W', 'D', 'h', 'm', 's', 'us', 'ms', 'ns', 'ps', 'fs', 'as')
         """
-        self.rnb = RandomNumberBounded(distribution=distribution, lb=0, ub=(end-start) / numpy.timedelta64(1, unit), dtype=numpy.float64)
+        self.rnb = ScaleOperator(distribution=distribution, lb=0, ub=(end-start) / numpy.timedelta64(1, unit), dtype=numpy.float64)
         self.start = start
         self.end = end
         self.unit = unit
