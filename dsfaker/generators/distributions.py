@@ -23,7 +23,7 @@ class Beta(DistributionBounded):
     """
     continuous = True
     lb = 0
-    up = 1
+    ub = 1
 
     def __init__(self,
                  a: Union[float, ndarray, Iterable[float]],
@@ -294,8 +294,6 @@ class Geometric(DistributionNonNegative):
     def __init__(self,
                  p: Union[float, ndarray, Iterable[float]],
                  seed=None):
-        if p <= 0:
-            raise ValueError("p parameter should be > 0")
         self.p = p
         self.rs = RandomState(seed=seed)
 
@@ -437,6 +435,30 @@ class Lognormal(DistributionNonNegative):
                                  size=size)
 
 
+class Lomax(DistributionNonNegative):
+    """
+    The Pareto II or Lomax distribution is non-negative and continuous.
+
+    The implementation is from `numpy.random.mtrand.RandomState.pareto <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.pareto.html>`_.
+
+    Distribution function:
+
+    .. math:: p(x) = \\frac{am^a}{x^{a+1}}
+    """
+    continuous = True
+    lb = 0
+
+    def __init__(self,
+                 a: Union[float, ndarray, Iterable[float]],
+                 seed=None):
+        self.a = a
+        self.rs = RandomState(seed=seed)
+
+    def _get(self, size=None):
+        return self.rs.pareto(a=self.a,
+                              size=size)
+
+
 class Multinomial(DistributionNonNegative):
     """
     The Multinomial distribution is non-negative and discrete.
@@ -493,7 +515,7 @@ class NormalMultivariate(DistributionUnbounded):
 
     def __init__(self,
                  mu: Union[float, ndarray, Iterable[float]],
-                 cov: Union[ndarray],
+                 cov: Union[list, ndarray],
                  seed=None):
         self.mu = mu
         self.cov = cov
@@ -503,30 +525,6 @@ class NormalMultivariate(DistributionUnbounded):
         return self.rs.multivariate_normal(mean=self.mu,
                                            cov=self.cov,
                                            size=size)
-
-
-class Pareto(DistributionNonNegative):
-    """
-    The Pareto distribution is non-negative and continuous.
-
-    The implementation is from `numpy.random.mtrand.RandomState.pareto <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.pareto.html>`_.
-
-    Distribution function:
-
-    .. math:: p(x) = \\frac{am^a}{x^{a+1}}
-    """
-    continuous = True
-    lb = 1
-
-    def __init__(self,
-                 a: Union[float, ndarray, Iterable[float]],
-                 seed=None):
-        self.a = a
-        self.rs = RandomState(seed=seed)
-
-    def _get(self, size=None):
-        return self.rs.pareto(a=self.a,
-                              size=size)
 
 
 class Poisson(DistributionNonNegative):
@@ -652,19 +650,21 @@ class Triangular(DistributionBounded):
     continuous = True
 
     def __init__(self,
-                 lb: Union[float, ndarray, Iterable[float]],
-                 step: Union[float, ndarray, Iterable[float]],
-                 ub: Union[float, ndarray, Iterable[float]],
+                 left: Union[float, ndarray, Iterable[float]],
+                 mode: Union[float, ndarray, Iterable[float]],
+                 right: Union[float, ndarray, Iterable[float]],
                  seed=None):
-        self.lb = lb
-        self.step = step
-        self.ub = ub
+        self.left = left
+        self.mode = mode
+        self.right = right
+        self.lb = left
+        self.ub = right
         self.rs = RandomState(seed=seed)
 
     def _get(self, size=None):
-        return self.rs.triangular(left=self.lb,
-                                  mode=self.step,
-                                  right=self.ub,
+        return self.rs.triangular(left=self.left,
+                                  mode=self.mode,
+                                  right=self.right,
                                   size=size)
 
 

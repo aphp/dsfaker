@@ -11,8 +11,8 @@ class Trigo(ApplyFunctionOperator):
 class Sin(ApplyFunctionOperator, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.sin, generator)
-        self.lb = 1.0
-        self.ub = -1.0
+        self.lb = -1.0
+        self.ub = 1.0
 
 
 class Sinh(Trigo):
@@ -23,8 +23,8 @@ class Sinh(Trigo):
 class Cos(Trigo, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.cos, generator)
-        self.lb = 1.0
-        self.ub = -1.0
+        self.lb = -1.0
+        self.ub = 1.0
 
 
 class Cosh(Trigo):
@@ -40,5 +40,5 @@ class Tan(Trigo):
 class Tanh(Trigo, BoundedGenerator):
     def __init__(self, generator: InfiniteGenerator=Autoincrement()):
         super().__init__(numpy.tanh, generator)
-        self.lb = 1.0
-        self.ub = -1.0
+        self.lb = -1.0
+        self.ub = 1.0

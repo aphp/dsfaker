@@ -3,11 +3,16 @@ from decimal import Decimal
 
 import pytest
 
-from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator, RandomDatetime
+from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator, RandomDatetime, Distribution, \
+    NotCompatibleGeneratorException, Beta, Binomial, BinomialNegative, CauchyStandard, Chisquare, ChisquareNonCentral, \
+    Dirichlet, Exponential, F, FNonCentral, Gamma, Geometric, Gumbel, Hypergeometric, Laplace, Logistic, Lognormal, \
+    Multinomial, NormalMultivariate, Normal, Lomax, Poisson, Power, Randint, RandomSample, Rayleigh, Triangular, \
+    Uniform, Vonmises, Wald, Weibull, Zipf, DistributionUnbounded, DistributionBounded, DistributionNonNegative, Sinh, \
+    Cosh, Tanh, Tan, BoundedGenerator
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
-from dsfaker.generators.series import  RepeatPattern
+from dsfaker.generators.series import RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
-from dsfaker.generators.timeseries import  TimeSeries
+from dsfaker.generators.timeseries import TimeSeries
 from dsfaker.generators.utils import ConstantValueGenerator, BoundingOperator, ApplyFunctionOperator, AbsoluteOperator
 
 
@@ -141,8 +146,15 @@ class TestBoundingOperator:
 
 
 class TestScalingOperator:
+    def test_raises(self):
+        with pytest.raises(ValueError):
+            ScalingOperator(generator=None, lb=10, ub=0, dtype=np.int8)
+        with pytest.raises(NotCompatibleGeneratorException):
+            ScalingOperator(generator=Generator(), lb=0, ub=10, dtype=np.int8)
+
     def test_values_single(self):
-        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        triangular_fun = BoundingOperator(
+            ApplyFunctionOperator(function=lambda x: abs((x % 4) - 2) - 1, generator=Autoincrement()), lb=-1, ub=1)
         n = ScalingOperator(generator=triangular_fun, lb=-10, ub=10, dtype=np.float32)
         for _ in range(10000):
             assert n.get_single() == 10
@@ -151,7 +163,8 @@ class TestScalingOperator:
             assert n.get_single() == 0
 
     def test_values_batch(self):
-        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        triangular_fun = BoundingOperator(
+            ApplyFunctionOperator(function=lambda x: abs((x % 4) - 2) - 1, generator=Autoincrement()), lb=-1, ub=1)
         n = ScalingOperator(generator=triangular_fun, lb=-10, ub=10, dtype=np.float32)
         tmp = [10, 0, -10, 0]
         count = 0
@@ -159,7 +172,7 @@ class TestScalingOperator:
             nb = np.random.randint(2, 1000)
             values = n.get_batch(nb)
             for j, val in enumerate(values):
-                assert val == tmp[(count + j)%4]
+                assert val == tmp[(count + j) % 4]
             count += nb
 
 
@@ -339,7 +352,8 @@ class TestTimeSeries:
 
 class TestDate:
     def test_values_single(self):
-        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        triangular_fun = BoundingOperator(
+            ApplyFunctionOperator(function=lambda x: abs((x % 4) - 2) - 1, generator=Autoincrement()), lb=-1, ub=1)
         rd = RandomDatetime(generator=triangular_fun, start=np.datetime64("1950"), end=np.datetime64("2042"), unit="Y")
         for i in range(10000):
             assert rd.get_single() == np.datetime64('2042')
@@ -348,7 +362,8 @@ class TestDate:
             assert rd.get_single() == np.datetime64('1996')
 
     def test_values_batch(self):
-        triangular_fun = BoundingOperator(ApplyFunctionOperator(function=lambda x: abs((x % 4)-2)-1, generator=Autoincrement()), lb=-1, ub=1)
+        triangular_fun = BoundingOperator(
+            ApplyFunctionOperator(function=lambda x: abs((x % 4) - 2) - 1, generator=Autoincrement()), lb=-1, ub=1)
         rd = RandomDatetime(generator=triangular_fun, start=np.datetime64("1950"), end=np.datetime64("2042"), unit="Y")
         tmp = [np.datetime64('2042'), np.datetime64('1996'), np.datetime64('1950'), np.datetime64('1996')]
         count = 0
@@ -356,8 +371,129 @@ class TestDate:
             nb = np.random.randint(2, 1000)
             values = rd.get_batch(nb)
             for j, val in enumerate(values):
-                assert val == tmp[(count + j)%4]
+                assert val == tmp[(count + j) % 4]
             count += nb
 
 
+class TestDistribution:
+    def test_raise(self):
+        with pytest.raises(NotImplementedError):
+            d = Distribution()
+            d.get_single()
+        with pytest.raises(NotImplementedError):
+            d = Distribution()
+            d.get_batch(10)
 
+
+class TestDistributions:
+    def _get_all_distributions(self):
+        distributions = [
+            Beta(a=2, b=2),
+            Binomial(n=20, p=0.5),
+            BinomialNegative(n=20, p=0.5),
+            CauchyStandard(),
+            Chisquare(k=6),
+            ChisquareNonCentral(k=4, nonc=1),
+            Dirichlet(alpha=[0.3, 0.3, 0.3]),
+            Exponential(),
+            F(dfnum=5, dfden=2),
+            FNonCentral(dfnum=10, dfden=20, nonc=5),
+            Gamma(k=1.0),
+            Geometric(p=0.5),
+            Gumbel(),
+            Hypergeometric(n=50, m=50, N=80),
+            Laplace(mu=-5, beta=4),
+            Logistic(mu=6, beta=2),
+            Lognormal(mu=0, sigma=1.5),
+            Lomax(a=2),
+            Multinomial(n=10, pvals=[1 / 10 for _ in range(10)]),
+            Normal(),
+            NormalMultivariate(mu=[0, 0], cov=[[1, 0], [0, 100]]),
+            Poisson(lam=4),
+            Power(a=2),
+            Randint(lb=-10, ub=20),
+            RandomSample(),
+            Rayleigh(sigma=1),
+            Triangular(left=10, mode=22, right=42),
+            Uniform(lb=-42, ub=84),
+            Vonmises(mu=-1, kappa=1),
+            Wald(mu=2, lam=0.2),
+            Weibull(a=0.5),
+            Zipf(a=2),
+        ]
+        return distributions
+
+    def test_attributes(self):
+        for d in self._get_all_distributions():
+            if isinstance(d, DistributionUnbounded):
+                assert d.lb is None
+                assert d.ub is None
+            elif isinstance(d, DistributionNonNegative):
+                assert d.lb is not None
+                assert d.ub is None
+            elif isinstance(d, DistributionBounded):
+                assert d.lb is not None
+                assert d.ub is not None
+
+    def test_bounds_single(self):
+        for d in self._get_all_distributions():
+            if isinstance(d, DistributionBounded):
+                for _ in range(10000):
+                    v = d.get_single()
+                    assert d.lb <= v <= d.ub
+            elif isinstance(d, DistributionNonNegative):
+                for _ in range(10000):
+                    v = d.get_single()
+                    if isinstance(v, np.ndarray):
+                        for vv in v:
+                            assert d.lb <= vv
+                    else:
+                        assert d.lb <= v
+            elif isinstance(d, DistributionUnbounded):
+                for _ in range(10000):
+                    v = d.get_single()
+
+    def test_bounds_batch(self):
+        for d in self._get_all_distributions():
+            if isinstance(d, DistributionBounded):
+                for v in d.get_batch(10000):
+                    assert d.lb <= v <= d.ub
+            elif isinstance(d, DistributionNonNegative):
+                for v in d.get_batch(10000):
+                    if isinstance(v, np.ndarray):
+                        for vv in v:
+                            assert d.lb <= vv
+                    else:
+                        assert d.lb <= v
+            elif isinstance(d, DistributionUnbounded):
+                d.get_batch(10000)
+
+
+class TestTrigo:
+    def _get_all(self):
+        functions = [
+            Sin(),
+            Sinh(),
+            Cos(),
+            Cosh(),
+            Tan(),
+            Tanh()
+        ]
+        return functions
+
+    def test_bounds_single(self):
+        for f in self._get_all():
+            if isinstance(f, BoundedGenerator):
+                for _ in range(10000):
+                    assert f.lb <= f.get_single() <= f.ub
+            else:
+                for _ in range(10000):
+                    f.get_single()
+
+    def test_bounds_batch(self):
+        for f in self._get_all():
+            if isinstance(f, BoundedGenerator):
+                for v in f.get_batch(10000):
+                    assert f.lb <= v <= f.ub
+            else:
+                f.get_batch(10000)
