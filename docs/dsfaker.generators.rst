@@ -1,69 +1,106 @@
 Generators
 ==========
 
-Base
-----
+In DSFaker, everything is a Generator.
 
-.. automodule:: dsfaker.generators.base
-    :members:
-    :undoc-members:
-    :show-inheritance:
+What is a Generator?
+--------------------
 
-Autoincrement
--------------
+A Generator is a python class implementing four different functions:
 
-.. automodule:: dsfaker.generators.autoincrement
-    :members:
-    :undoc-members:
-    :show-inheritance:
+1 - get_single()
+................
 
-Date / Datetime
----------------
+Which returns a single value
 
-.. automodule:: dsfaker.generators.date
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. code-block:: python
 
-Series
-------
-
-.. automodule:: dsfaker.generators.series
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   >>> generator.get_single()
+   value
 
 
-Time-series
------------
+2 - stream_single()
+...................
 
-.. automodule:: dsfaker.generators.timeseries
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Which returns an iterable returning one value at a time
 
+.. code-block:: python
 
-Trigonometric
--------------
-
-.. automodule:: dsfaker.generators.trigonometric
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   >>> for v in generator.stream_single():
+   >>>   print(v)
+   value1
+   value2
+   ...
 
 
-Utils
------
+3 - get_batch(batch_size)
+.........................
 
-.. automodule:: dsfaker.generators.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Which returns *batch_size* values
 
-Probability distributions
--------------------------
+.. code-block:: python
 
-.. automodule:: dsfaker.generators.distributions
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   >>> generator.get_batch(3)
+   array([ value1,   value2,   value3])
+
+
+4 - stream_batch(batch_size)
+............................
+
+Which returns an iterable returning *batch_size* values at a time
+
+.. code-block:: python
+
+   >>> for v in generator.stream_batch(3):
+   >>>   print(v)
+   array([ value1,   value2,   value3])
+   array([ value4,   value5,   value6])
+   ...
+
+
+Generators operations
+---------------------
+
+A Generator can consist of multiple other Generators. That is why the base Generator class implements many basic operations.
+
+Let's take four different Generators:
+
+.. code-block:: python
+
+   >>> g1 = Sin()
+   >>> g2 = Autoincrement()
+   >>> g3 = RepeatPattern([0,1,2,3,4,5,6])
+   >>> g4 = Normal()
+
+Then, you can combine those Generators using basic operations, such as:
+
+.. code-block:: python
+
+   >>> g5 = g1 + g2
+   >>> g6 = g3 / g4
+   >>> g7 = g5 * g6
+
+The resulting objects (g5, g6, g7) are new Generators that will transparently apply the operator to the two Generators
+
+And many more are available! See: :ref:`generators.base <generators-base>`.
+
+.. DANGER::
+   Do not use a Generator that is already used by another one because we only store references to those Generators.
+   If you want to duplicate a Generator, use `generator.copy()`.
+
+Available generators
+--------------------
+
+There are many different Generators available, but every Generator implements an abstract class from :ref:`generators.base <generators-base>`
+
+.. toctree::
+
+   dsfaker.generators.base
+   dsfaker.generators.autoincrement
+   dsfaker.generators.date
+   dsfaker.generators.distributions
+   dsfaker.generators.series
+   dsfaker.generators.timeseries
+   dsfaker.generators.trigonometric
+   dsfaker.generators.utils
+

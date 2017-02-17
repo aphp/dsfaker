@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 from functools import reduce
 import operator
 from typing import Iterable
@@ -7,6 +8,9 @@ import numpy
 
 
 class Generator():
+    """
+    Test
+    """
     def get_single(self) -> float:
         """
         A function that returns a single element.
@@ -28,6 +32,9 @@ class Generator():
     def stream_batch(self, batch_size: int) -> Iterable:
         while True:
             yield self.get_batch(batch_size=batch_size)
+
+    def copy(self):
+        return copy.deepcopy(self)
 
     def __add__(self, other):
         return AddOperator(self, other)
@@ -79,7 +86,6 @@ class FiniteGenerator(Generator):
 
 class InfiniteGenerator(Generator):
     finite = False
-    pass
 
 
 class ReduceOperator(Generator):
