@@ -1,7 +1,10 @@
+import datetime
+import time
+
 import numpy
 
 from dsfaker.exceptions import NotCompatibleGeneratorException
-from . import BoundedGenerator, InfiniteGenerator, Generator, DistributionBounded
+from . import BoundedGenerator, InfiniteGenerator, Generator
 
 
 class ConstantValueGenerator(InfiniteGenerator):
@@ -67,3 +70,56 @@ class ApplyFunctionOperator(Generator):
 class AbsoluteOperator(ApplyFunctionOperator):
     def __init__(self, generator):
         super().__init__(numpy.absolute, generator)
+
+
+class TimeDelayedGenerator(Generator):
+    def __init__(self, generator: Generator, time_delay_sec: float=None, time_delay_generator: Generator=None):
+        """
+        The TimeDelayedGenerator gives a simple way to simulate a real application that returns data every 10 seconds for example.
+        You can either provide the time delay between each values in seconds or via a generator.
+
+        :param generator: the generator used to return values
+        :param time_delay_ms: the time to sleep in seconds before returning the next value
+        :param time_delay_generator: the time to sleep given by a generator in seconds before returning the next value
+        """
+        self.generator = generator
+        self.time_delay_sec = time_delay_sec
+        self.time_delay_generator = time_delay_generator
+
+        self.start_time = None
+        self.previous_time = None
+
+    def get_single(self) -> float:
+        if self.time_delay_sec is not None:
+            td = self.time_delay_sec
+        else:
+            td = self.time_delay_generator.get_single()
+        td = datetime.timedelta(seconds=td)
+
+        if self.start_time is None:
+            self.start_time = datetime.datetime.now()
+            self.previous_time += self.start_time + td
+            return self.generator.get_single()
+
+        while self.previous_time + td < datetime.datetime.now():
+            time.sleep((td.seconds/5))
+
+        return self.generator.get_single()
+
+    def get_batch(self, batch_size: int) -> numpy.array:
+        if self.time_delay_sec is not None:
+            td = self.time_delay_sec * batch_size
+        else:
+            td = numpy.sum(self.time_delay_generator.get_batch(batch_size=batch_size))
+        td = datetime.timedelta(seconds=td)
+
+        if self.start_time is None:
+            self.start_time = datetime.datetime.now()
+            self.previous_time = self.start_time
+
+        while self.previous_time + td < datetime.datetime.now():
+            time.sleep((td/5))
+
+        return self.generator.get_batch(batch_size=batch_size)
+
+
