@@ -171,5 +171,5 @@ class DistributionNonNegative(Distribution):
     lb = 0
 
 
-class DistributionBounded(Distribution):
+class DistributionBounded(Distribution, BoundedGenerator):
     bounded = True
