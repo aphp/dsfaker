@@ -10,10 +10,12 @@ DSFaker aims at providing data scientists with functions for generating and stre
 
 - Time-series
 - Date/Datetime
-- Autoincrement
-- Random (unique or not) from existing distributions
-- Random (unique or not) subsets of data from existing provided dataset
-- Random (unique or not) pick-up of data from existing provided dataset
+- Autoincrement & random autoincrement
+- Trigonometric (Sin, Sinh, Cos, Cosh, Tan, Tanh)
+- Random distributions
+- Pattern repetition
+- Noise application
+- Basic operators between generators (+, -, /, //, \*, ...)
 
 To generate such data, you can specify the distribution you want amongst the ones provided by numpy.random.
 Or you can also implement your own distribution to generate data.
