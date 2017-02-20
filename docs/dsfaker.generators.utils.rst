@@ -151,7 +151,6 @@ This Generator takes another Generator and cast its values to a given dtype.
     plt.show()
 
 
-
 ConstantValueGenerator
 ----------------------
 
@@ -184,7 +183,7 @@ This Generator simply returns a constant given value indefinitely.
 ScalingOperator
 ---------------
 
-This Generator returns scales a BoundedGenerator to another range of values.
+This Generator scales a BoundedGenerator to another range of values.
 
 .. code-block:: python3
 
