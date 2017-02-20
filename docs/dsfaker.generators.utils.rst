@@ -122,10 +122,15 @@ This Generator takes another Generator and cast its values to a given dtype.
     import numpy
     import matplotlib.pyplot as plt
     from dsfaker.generators.autoincrement import Autoincrement
+    from dsfaker.generators.distributions import Normal
     from dsfaker.generators.utils import CastOperator
     x = Autoincrement()
-    y = CastOperator(Normal(), dtype=numpy.int16)
-    plt.plot(x.get_batch(50), y.get_batch(50), '.')
+    y = Normal(seed=22)
+    by = CastOperator(y.copy(), dtype=numpy.int16)
+    x_vals = x.get_batch(50)
+    plt.plot(x_vals, y.get_batch(50), '.', label='Normal law')
+    plt.plot(x_vals, by.get_batch(50), '.', label='Cast to int16')
+    plt.legend()
     plt.show()
 
 .. plot::
@@ -133,11 +138,16 @@ This Generator takes another Generator and cast its values to a given dtype.
     import numpy
     import matplotlib.pyplot as plt
     from dsfaker.generators.autoincrement import Autoincrement
+    from dsfaker.generators.distributions import Normal
     from dsfaker.generators.utils import CastOperator
     x = Autoincrement()
-    y = CastOperator(Normal(), dtype=numpy.int16)
+    y = Normal(seed=22)
+    by = CastOperator(y.copy(), dtype=numpy.int16)
     fig, ax = plt.subplots(figsize=(10,5))
-    ax.plot(x.get_batch(50), y.get_batch(50), '.')
+    x_vals = x.get_batch(50)
+    ax.plot(x_vals, y.get_batch(50), '.', label='Normal law')
+    ax.plot(x_vals, by.get_batch(50), '.', label='Cast to int16')
+    plt.legend()
     plt.show()
 
 
