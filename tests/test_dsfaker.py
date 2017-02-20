@@ -122,6 +122,11 @@ class TestGenerator:
         c = a ^ b
         assert c.get_single() == va ^ vb
 
+    def test_neg_op(self):
+        v = np.random.randint(-1000, +1000, dtype=np.int32)
+        c = - ConstantValueGenerator(v, dtype=np.int64)
+        assert c.get_single() == - v
+
 
 class TestBoundingOperator:
     def test_values_single(self):

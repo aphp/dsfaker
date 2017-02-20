@@ -66,6 +66,9 @@ class Generator():
     def __xor__(self, other):
         return XorOperator(self, other)
 
+    def __neg__(self):
+        return MulOperator(self, -1)
+
 
 class BoundedGenerator(Generator):
     bounded = True
@@ -79,10 +82,18 @@ class ReduceOperator(Generator):
         self.reduce_lambda = reduce_lambda
 
     def get_single(self) -> float:
-        return reduce(lambda a, b: self.reduce_lambda(a.get_single(), b.get_single()), self.generators)
+        def _get_single(x):
+            if isinstance(x, Generator):
+                return x.get_single()
+            return x
+        return reduce(lambda a, b: self.reduce_lambda(_get_single(a), _get_single(b)), self.generators)
 
     def get_batch(self, batch_size: int) -> numpy.array:
-        return reduce(lambda a, b: self.reduce_lambda(a.get_batch(batch_size=batch_size), b.get_batch(batch_size=batch_size)), self.generators)
+        def _get_batch(x, batch_size):
+            if isinstance(x, Generator):
+                return x.get_batch(batch_size=batch_size)
+            return x
+        return reduce(lambda a, b: self.reduce_lambda(_get_batch(a, batch_size=batch_size), _get_batch(b, batch_size=batch_size)), self.generators)
 
 
 class AddOperator(ReduceOperator):
