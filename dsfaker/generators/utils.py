@@ -125,7 +125,7 @@ class TimeDelayedGenerator(Generator):
         return self.generator.get_batch(batch_size=batch_size)
 
 
-class CastGenerator(Generator):
+class CastOperator(Generator):
     def __init__(self, generator: Generator, dtype: numpy.dtype):
         self.generator = generator
         self.dtype = dtype

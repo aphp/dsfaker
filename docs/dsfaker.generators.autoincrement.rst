@@ -10,14 +10,14 @@ This is a simple autoincrement that has a constant step.
 
 .. code-block:: python3
 
-    >>> import matplotlib.pyplot as plt
-    >>> from dsfaker.generators.autoincrement import Autoincrement
+    import matplotlib.pyplot as plt
+    from dsfaker.generators.autoincrement import Autoincrement
 
-    >>> x = Autoincrement()
-    >>> y = Autoincrement(start=-10, step=-0.2, dtype=np.float32)
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.show()
+    x = Autoincrement()
+    y = Autoincrement(start=-10, step=-0.2, dtype=np.float32)
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.show()
 
 .. plot::
 
@@ -37,15 +37,15 @@ This is a autoincrement that has a dynamic step based on a generator.
 
 .. code-block:: python3
 
-    >>> import matplotlib.pyplot as plt
-    >>> from dsfaker.generators.distributions import Beta
-    >>> from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
+    import matplotlib.pyplot as plt
+    from dsfaker.generators.distributions import Beta
+    from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 
-    >>> x = AutoincrementWithGenerator(start=42, generator=Beta(a=2, b=2))
-    >>> y = Autoincrement()
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.show()
+    x = AutoincrementWithGenerator(start=42, generator=Beta(a=2, b=2))
+    y = Autoincrement()
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.show()
 
 .. plot::
 
@@ -65,15 +65,15 @@ For exemple, autoincrement with an unbounded Normal law would give:
 
 .. code-block:: python3
 
-    >>> import matplotlib.pyplot as plt
-    >>> from dsfaker.generators.distributions import Normal
-    >>> from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
+    import matplotlib.pyplot as plt
+    from dsfaker.generators.distributions import Normal
+    from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 
-    >>> x = AutoincrementWithGenerator(start=0, generator=Normal())
-    >>> y = Autoincrement()
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.plot(x.get_batch(20), y.get_batch(20), 'o')
-    >>> plt.show()
+    x = AutoincrementWithGenerator(start=0, generator=Normal())
+    y = Autoincrement()
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.plot(x.get_batch(20), y.get_batch(20), 'o')
+    plt.show()
 
 .. plot::
 

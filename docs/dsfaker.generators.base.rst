@@ -28,7 +28,7 @@ This Generator implements a reduce operation on two or more provided Generators.
 
 .. code-block:: python
 
-   >>> ReduceOperator(Sin(), Beta(2, 2), Tan(), lambda a, b: a + b)
+   ReduceOperator(Sin(), Beta(2, 2), Tan(), lambda a, b: a + b)
 
 
 There are many available operators that inherits from ReduceOperator:

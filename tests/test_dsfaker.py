@@ -10,7 +10,7 @@ from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distr
     Dirichlet, Exponential, F, FNonCentral, Gamma, Geometric, Gumbel, Hypergeometric, Laplace, Logistic, Lognormal, \
     Multinomial, NormalMultivariate, Normal, Lomax, Poisson, Power, Randint, RandomSample, Rayleigh, Triangular, \
     Uniform, Vonmises, Wald, Weibull, Zipf, DistributionUnbounded, DistributionBounded, DistributionNonNegative, Sinh, \
-    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastGenerator, TimeDelayedGenerator
+    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
@@ -513,7 +513,7 @@ class TestTrigo:
 class TestCastGenerator:
     def test_types(self):
         n = Normal()
-        cg = CastGenerator(generator=n, dtype=np.int16)
+        cg = CastOperator(generator=n, dtype=np.int16)
         cg.get_single()
         assert cg.get_batch(1000).dtype == np.int16
 
