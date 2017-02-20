@@ -73,21 +73,6 @@ class BoundedGenerator(Generator):
     ub = None
 
 
-class FiniteGenerator(Generator):
-    finite = True
-
-    def get_all(self, *args, **kwargs) -> numpy.array:
-        """
-        A function that returns all the elements.
-        Not implemented.
-        """
-        raise NotImplementedError("get_all not implemented")
-
-
-class InfiniteGenerator(Generator):
-    finite = False
-
-
 class ReduceOperator(Generator):
     def __init__(self, *generators, reduce_lambda):
         self.generators = generators

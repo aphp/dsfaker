@@ -793,3 +793,24 @@ class Zipf(DistributionNonNegative):
     def _get(self, size=None):
         return self.rs.zipf(a=self.a,
                             size=size)
+
+
+class Choice(DistributionBounded):
+    """
+    The Choice distribution is bounded and discrete.
+
+    The implementation is from `numpy.random.mtrand.RandomState.choice <https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.choice.html>`_.
+    """
+    continuous = False
+
+    def __init__(self,
+                 probabilities: numpy.array,
+                 seed=None):
+        self.probabilities = probabilities
+        self.a = numpy.arange(len(probabilities))
+        self.lb = 0
+        self.ub = len(probabilities) - 1
+        self.rs = RandomState(seed=seed)
+
+    def _get(self, size=None):
+        return self.rs.choice(a=self.a, p=self.probabilities, size=size)

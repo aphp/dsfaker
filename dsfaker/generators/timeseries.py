@@ -1,8 +1,8 @@
-from . import InfiniteGenerator
+from . import Generator
 
 
-class TimeSeries(InfiniteGenerator):
-    def __init__(self, time_gen: InfiniteGenerator, data_gen: InfiniteGenerator):
+class TimeSeries(Generator):
+    def __init__(self, time_gen: Generator, data_gen: Generator):
         self.time_gen = time_gen
         self.data_gen = data_gen
 

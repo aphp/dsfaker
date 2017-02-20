@@ -1,14 +1,16 @@
-import numpy as np
+import datetime
 from decimal import Decimal
+import time
 
+import numpy as np
 import pytest
 
-from dsfaker.generators import Generator, FiniteGenerator, ScalingOperator, RandomDatetime, Distribution, \
+from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distribution, \
     NotCompatibleGeneratorException, Beta, Binomial, BinomialNegative, CauchyStandard, Chisquare, ChisquareNonCentral, \
     Dirichlet, Exponential, F, FNonCentral, Gamma, Geometric, Gumbel, Hypergeometric, Laplace, Logistic, Lognormal, \
     Multinomial, NormalMultivariate, Normal, Lomax, Poisson, Power, Randint, RandomSample, Rayleigh, Triangular, \
     Uniform, Vonmises, Wald, Weibull, Zipf, DistributionUnbounded, DistributionBounded, DistributionNonNegative, Sinh, \
-    Cosh, Tanh, Tan, BoundedGenerator
+    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastGenerator, TimeDelayedGenerator
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
@@ -45,6 +47,16 @@ class TestGenerator:
                     c += 1
                 if c > 100000:
                     break
+
+    def test_copy(self):
+        g1 = Autoincrement()
+        g2 = g1.copy()
+
+        g2.get_single()
+
+        assert g1.get_single() == g2.get_single() - 1
+
+
 
     def _get_two_unique_gen(self):
         va = np.random.randint(-1000, +1000, dtype=np.int32)
@@ -109,13 +121,6 @@ class TestGenerator:
         va, vb, a, b = self._get_two_unique_gen_binary()
         c = a ^ b
         assert c.get_single() == va ^ vb
-
-
-class TestFiniteGenerator:
-    def test_raises(self):
-        fg = FiniteGenerator()
-        with pytest.raises(NotImplementedError):
-            fg.get_all()
 
 
 class TestBoundingOperator:
@@ -420,6 +425,7 @@ class TestDistributions:
             Wald(mu=2, lam=0.2),
             Weibull(a=0.5),
             Zipf(a=2),
+            Choice(probabilities=[.05, .15, .05, .20, .25, .10, .20])
         ]
         return distributions
 
@@ -497,3 +503,55 @@ class TestTrigo:
                     assert f.lb <= v <= f.ub
             else:
                 f.get_batch(10000)
+
+
+class TestCastGenerator:
+    def test_types(self):
+        n = Normal()
+        cg = CastGenerator(generator=n, dtype=np.int16)
+        cg.get_single()
+        assert cg.get_batch(1000).dtype == np.int16
+
+
+class TestTimeDelayedGenerator:
+    def test_values_single(self):
+        time_delay_sec = 0.005
+        tdg = TimeDelayedGenerator(generator=ConstantValueGenerator(21, dtype=np.uint16), time_delay_sec=time_delay_sec)
+
+        start_time = datetime.datetime.now()
+        for _ in range(100):
+            tdg.get_single()
+        end_time = datetime.datetime.now()
+        elapsed_timedelta = (end_time - start_time)
+        assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)
+
+        tdg = TimeDelayedGenerator(generator=ConstantValueGenerator(21, dtype=np.uint16),
+                                   time_delay_generator=ConstantValueGenerator(time_delay_sec, dtype=np.float16))
+
+        start_time = datetime.datetime.now()
+        for _ in range(100):
+            tdg.get_single()
+        end_time = datetime.datetime.now()
+        elapsed_timedelta = (end_time - start_time)
+        assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)
+
+    def test_values_batch(self):
+        time_delay_sec = 0.0005
+        tdg = TimeDelayedGenerator(generator=ConstantValueGenerator(21, dtype=np.uint16), time_delay_sec=time_delay_sec)
+
+        start_time = datetime.datetime.now()
+        for _ in range(10):
+            tdg.get_batch(100)
+        end_time = datetime.datetime.now()
+        elapsed_timedelta = (end_time - start_time)
+        assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)
+
+        tdg = TimeDelayedGenerator(generator=ConstantValueGenerator(21, dtype=np.uint16),
+                                   time_delay_generator=ConstantValueGenerator(time_delay_sec, dtype=np.float16))
+
+        start_time = datetime.datetime.now()
+        for _ in range(10):
+            tdg.get_batch(100)
+        end_time = datetime.datetime.now()
+        elapsed_timedelta = (end_time - start_time)
+        assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)

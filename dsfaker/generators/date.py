@@ -1,9 +1,9 @@
 import numpy
 
-from . import InfiniteGenerator, ScalingOperator, BoundedGenerator
+from . import Generator, ScalingOperator, BoundedGenerator
 
 
-class RandomDatetime(InfiniteGenerator):
+class RandomDatetime(Generator):
     def __init__(self, generator: BoundedGenerator, start: numpy.datetime64, end: numpy.datetime64, unit):
         """
         A timezone-aware class to generate datetimes between start and end (inclusive) following a certain distribution

@@ -30,10 +30,10 @@ When possible, you can specify:
 .. code-block:: python
 
    >>> import numpy
-   >>> from dsfaker.distributions import Beta
-   >>> from dsfaker.infinite_generators import RandomNumberBounded
+   >>> from dsfaker.generators.distributions import Beta
+   >>> from dsfaker.generators.base import BoundingOperator
    >>> b = Beta(a=2, b=5)
-   >>> rnb = RandomNumberBounded(distribution=b, lb=-5, ub=42, dtype=numpy.float16)
+   >>> bb = BoundingOperator(generator=b, lb=-5, ub=42)
 
 Returned types
 --------------
@@ -44,14 +44,14 @@ We provide four different ways of getting the generated data:
 
 .. code-block:: python
 
-   >>> rnb.get_single()
+   >>> bb.get_single()
    -3.9368686022877473
 
 - Stream one element at a time through python's yield:
 
 .. code-block:: python
 
-   >>>for e in rnb.stream_single():
+   >>>for e in bb.stream_single():
    >>>  print(e)
    9.27201727507207
    2.413713107525754
@@ -61,29 +61,20 @@ We provide four different ways of getting the generated data:
 
 .. code-block:: python
 
-   >>> rnb.get_batch(batch_size=3)
+   >>> bb.get_batch(batch_size=3)
    array([ 11.390625,   8.765625,   5.671875], dtype=float16)
 
 - Stream batches through python's yield:
 
 .. code-block:: python
 
-   >>> for batch in rnb.stream_batch(batch_size=10000):
+   >>> for batch in bb.stream_batch(batch_size=10000):
    >>>  print(batch)
    [  2.46484375  10.9375       1.203125   ...,   6.78125     19.921875
        7.7265625 ]
    [ 11.484375     8.953125    -1.61132812 ...,   2.33203125  -0.11328125
       -1.44335938]
    ...
-
-When the generator is finite, you can get all the data at a time:
-
-.. code-block:: python
-
-   from dsfaker.finite_generators import TODO
-   todo = TODO(distribution=b, dtype=numpy.int16)
-   todo.get_all()
-
 
 
 +---------------------------------------+---------------------------------------------+------------+----------------------------------------------------------------+

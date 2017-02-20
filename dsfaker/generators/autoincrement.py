@@ -1,9 +1,9 @@
 import numpy
 
-from . import InfiniteGenerator, Generator
+from . import Generator
 
 
-class Autoincrement(InfiniteGenerator):
+class Autoincrement(Generator):
     def __init__(self, start: float=0.0, step: float=1.0, dtype: numpy.dtype=numpy.int64):
         self.start = start
         self.offset = 0
@@ -22,7 +22,7 @@ class Autoincrement(InfiniteGenerator):
                             dtype=self.dtype)
 
 
-class AutoincrementWithGenerator(InfiniteGenerator):
+class AutoincrementWithGenerator(Generator):
     def __init__(self, start: float, generator: Generator):
         """
 

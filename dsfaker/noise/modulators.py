@@ -1,9 +1,9 @@
 import numpy
 
-from dsfaker.generators import Normal, TimeSeries, InfiniteGenerator,   Generator, BoundingOperator
+from dsfaker.generators import Normal, TimeSeries, Generator, BoundingOperator
 
 
-class ModulatorLinearInterpolation(InfiniteGenerator):
+class ModulatorLinearInterpolation(Generator):
     def __init__(self,
                  time_series: TimeSeries,
                  start_frequency: float=1,

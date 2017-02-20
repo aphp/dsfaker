@@ -1,10 +1,10 @@
 import math
 import numpy
 
-from . import InfiniteGenerator
+from . import Generator
 
 
-class Serie(InfiniteGenerator):
+class Serie(Generator):
     pass
 
 

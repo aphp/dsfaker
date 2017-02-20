@@ -4,10 +4,10 @@ import time
 import numpy
 
 from dsfaker.exceptions import NotCompatibleGeneratorException
-from . import BoundedGenerator, InfiniteGenerator, Generator
+from . import BoundedGenerator, Generator
 
 
-class ConstantValueGenerator(InfiniteGenerator):
+class ConstantValueGenerator(Generator):
     def __init__(self, value, dtype: numpy.dtype):
         self.value = value
         self.dtype = dtype
@@ -98,28 +98,40 @@ class TimeDelayedGenerator(Generator):
 
         if self.start_time is None:
             self.start_time = datetime.datetime.now()
-            self.previous_time += self.start_time + td
+            self.previous_time = self.start_time
             return self.generator.get_single()
 
-        while self.previous_time + td < datetime.datetime.now():
-            time.sleep((td.seconds/5))
+        while self.previous_time + td > datetime.datetime.now():
+            time.sleep(((td.seconds + td.microseconds / 1000000) / 5))
 
+        self.previous_time += td
         return self.generator.get_single()
 
     def get_batch(self, batch_size: int) -> numpy.array:
         if self.time_delay_sec is not None:
             td = self.time_delay_sec * batch_size
         else:
-            td = numpy.sum(self.time_delay_generator.get_batch(batch_size=batch_size))
+            td = float(numpy.sum(self.time_delay_generator.get_batch(batch_size=batch_size)))
         td = datetime.timedelta(seconds=td)
 
         if self.start_time is None:
             self.start_time = datetime.datetime.now()
             self.previous_time = self.start_time
 
-        while self.previous_time + td < datetime.datetime.now():
-            time.sleep((td/5))
+        while self.previous_time + td > datetime.datetime.now():
+            time.sleep(((td.seconds + td.microseconds / 1000000) / 5))
 
+        self.previous_time += td
         return self.generator.get_batch(batch_size=batch_size)
 
 
+class CastGenerator(Generator):
+    def __init__(self, generator: Generator, dtype: numpy.dtype):
+        self.generator = generator
+        self.dtype = dtype
+
+    def get_single(self) -> float:
+        return self.generator.get_single()
+
+    def get_batch(self, batch_size: int) -> numpy.array:
+        return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype)

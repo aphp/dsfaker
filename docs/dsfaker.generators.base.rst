@@ -21,26 +21,6 @@ This Generator is an abstract class that provides three attributes:
 - ub (upper bound)
 
 
-FiniteGenerator(Generator)
---------------------------
-
-This Generator is finite. It will stop after a certain number of values returned.
-
-This Generator is an abstract class that provides one more attribute:
-
-- finite = True (Boolean)
-
-
-InfiniteGenerator(Generator)
-----------------------------
-
-This Generator is infinite. It will never stop returning values if needed.
-
-This Generator is an abstract class that provides one more attribute:
-
-- finite = False (Boolean)
-
-
 ReduceOperator(Generator)
 -------------------------
 
