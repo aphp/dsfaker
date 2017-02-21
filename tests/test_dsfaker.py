@@ -1,6 +1,5 @@
 import datetime
 from decimal import Decimal
-import time
 
 import numpy as np
 import pytest
@@ -70,35 +69,71 @@ class TestGenerator:
         c = a + b
         assert c.get_single() == va + vb
 
+    def test_add_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 + a).get_single() == 2 + va
+        assert (b + 6).get_single() == vb + 6
+        assert sum((7 + b).get_batch(10)) == 10 * (7 + vb)
+
     def test_sub_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a - b
         assert c.get_single() == va - vb
+
+    def test_sub_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 - a).get_single() == 2 - va
+        assert (b - 6).get_single() == vb - 6
 
     def test_truediv_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a / b
         assert c.get_single() == va / vb
 
+    def test_truediv_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 / a).get_single() == 2 / va
+        assert (b / 6).get_single() == vb / 6
+
     def test_floordiv_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a // b
         assert c.get_single() == va // vb
+
+    def test_floordiv_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 // a).get_single() == 2 // va
+        assert (b // 6).get_single() == vb // 6
 
     def test_mul_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a * b
         assert c.get_single() == va * vb
 
+    def test_mul_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 * a).get_single() == 2 * va
+        assert (b * 6).get_single() == vb * 6
+
     def test_pow_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a ** b
         assert c.get_single() == va ** vb
 
+    def test_pow_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 ** b).get_single() == 2 ** vb
+        assert (a ** 6).get_single() == va ** 6
+
     def test_mod_op(self):
         va, vb, a, b = self._get_two_unique_gen()
         c = a % b
         assert c.get_single() == va % vb
+
+    def test_mod_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen()
+        assert (2 % a).get_single() == 2 % va
+        assert (b % 6).get_single() == vb % 6
 
     def _get_two_unique_gen_binary(self):
         va = np.random.randint(0, 2, dtype=np.int32)
@@ -112,15 +147,36 @@ class TestGenerator:
         c = a & b
         assert c.get_single() == va & vb
 
+    def test_and_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        assert (1 & b).get_single() == 1 & vb
+        assert (a & 1).get_single() == va & 1
+        assert (0 & b).get_single() == 0 & vb
+        assert (a & 0).get_single() == va & 0
+
     def test_or_op(self):
         va, vb, a, b = self._get_two_unique_gen_binary()
         c = a | b
         assert c.get_single() == va | vb
 
+    def test_or_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        assert (1 | b).get_single() == 1 | vb
+        assert (a | 1).get_single() == va | 1
+        assert (0 | b).get_single() == 0 | vb
+        assert (a | 0).get_single() == va | 0
+
     def test_xor_op(self):
         va, vb, a, b = self._get_two_unique_gen_binary()
         c = a ^ b
         assert c.get_single() == va ^ vb
+
+    def test_xor_op_scalar(self):
+        va, vb, a, b = self._get_two_unique_gen_binary()
+        assert (1 ^ b).get_single() == 1 ^ vb
+        assert (a ^ 1).get_single() == va ^ 1
+        assert (0 ^ b).get_single() == 0 ^ vb
+        assert (a ^ 0).get_single() == va ^ 0
 
     def test_neg_op(self):
         v = np.random.randint(-1000, +1000, dtype=np.int32)

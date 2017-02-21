@@ -69,6 +69,28 @@ class Generator():
     def __neg__(self):
         return MulOperator(self, -1)
 
+    __radd__ = __add__
+    __rmul__ = __mul__
+    __rand__ = __and__
+    __ror__ = __or__
+    __rxor__ = __xor__
+
+    def __rsub__(self, other):
+        return SubOperator(other, self)
+
+    def __rtruediv__(self, other):
+        return TrueDivOperator(other, self)
+
+    def __rfloordiv__(self, other):
+        return FloorDivOperator(other, self)
+
+    def __rpow__(self, other):
+        return PowOperator(other, self)
+
+    def __rmod__(self, other):
+        return ModOperator(other, self)
+
+
 
 class BoundedGenerator(Generator):
     bounded = True

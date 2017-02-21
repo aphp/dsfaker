@@ -61,7 +61,7 @@ Which returns an iterable returning *batch_size* values at a time
 Generators operations
 ---------------------
 
-A Generator can consist of multiple other Generators. That is why the base Generator class implements many basic operations.
+A Generator can consist of multiple other Generators. The base Generator class implements many basic operations that combines Generators into new ones.
 
 Let's take four different Generators:
 
@@ -78,7 +78,7 @@ Then, you can combine those Generators using basic operations, such as:
 
    >>> g5 = g1 + g2
    >>> g6 = g3 / g4
-   >>> g7 = g5 * g6
+   >>> g7 = (g1 + g2) * (g3 / g4)
 
 The resulting objects (g5, g6, g7) are new Generators that will transparently apply the operator to the two Generators
 
@@ -87,6 +87,13 @@ And many more are available! See: :ref:`generators.base <generators-base>`.
 .. DANGER::
    Do not use a Generator that is already used by another one because we only store references to those Generators.
    If you want to duplicate a Generator, use `generator.copy()`.
+
+You can also work with python int and float types:
+
+.. code-block:: python
+
+   >>> g8 = 22.9 * g7 // 3 + 4.2
+
 
 Available generators
 --------------------
