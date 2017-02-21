@@ -122,50 +122,79 @@ class AddOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.add)
 
+    def __str__(self):
+        return '+'
+
 
 class SubOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.sub)
 
+    def __str__(self):
+        return '-'
 
 class TrueDivOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.truediv)
+
+    def __str__(self):
+        return '/'
 
 
 class FloorDivOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.floordiv)
 
+    def __str__(self):
+        return '//'
+
 
 class MulOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.mul)
+
+    def __str__(self):
+        return '*'
 
 
 class PowOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.pow)
 
+    def __str__(self):
+        return '**'
+
 
 class ModOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.mod)
+
+    def __str__(self):
+        return '%'
 
 
 class AndOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.and_)
 
+    def __str__(self):
+        return '&'
+
 
 class OrOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.or_)
 
+    def __str__(self):
+        return '|'
+
 
 class XorOperator(ReduceOperator):
     def __init__(self, *generators):
         super().__init__(*generators, reduce_lambda=operator.xor)
+
+    def __str__(self):
+        return '^'
 
 
 class Distribution(Generator):

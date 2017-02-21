@@ -78,7 +78,7 @@ Then, you can combine those Generators using basic operations, such as:
 
    >>> g5 = g1 + g2
    >>> g6 = g3 / g4
-   >>> g7 = (g1 + g2) * (g3 / g4)
+   >>> g7 = g6 * g5
 
 The resulting objects (g5, g6, g7) are new Generators that will transparently apply the operator to the two Generators
 
