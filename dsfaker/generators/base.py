@@ -27,7 +27,10 @@ class Generator():
         A function that returns a single batch of elements.
         Not implemented.
         """
-        raise NotImplementedError("get_batch not implemented")
+        res = []
+        for _ in range(batch_size):
+            res.append(self.get_single())
+        return numpy.asarray(res)
 
     def stream_batch(self, batch_size: int) -> Iterable:
         while True:

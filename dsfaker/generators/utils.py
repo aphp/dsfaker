@@ -135,3 +135,51 @@ class CastOperator(Generator):
 
     def get_batch(self, batch_size: int) -> numpy.array:
         return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype)
+
+
+class History(Generator):
+    def __init__(self, generator, size, initial_values=None):
+        if initial_values is None:
+            self.history = numpy.zeros(size, dtype=numpy.float64)
+        else:
+            assert size == len(initial_values)
+            self.history = numpy.asarray(initial_values)
+        self.idx = 0
+
+        self.generator = generator
+        self.size = size
+
+    def get_prev(self, i):
+        return self.history[(self.size + self.idx + i) % self.size]
+
+    def _put(self, e):
+        if self.idx == self.size:
+            self.idx = 0
+        self.history[self.idx] = e
+        self.idx += 1
+
+    def get_single(self) -> float:
+        e = self.generator.get_single()
+        self._put(e)
+        return e
+
+    def get_batch(self, batch_size: int) -> numpy.array:
+        vals = self.generator.get_batch(batch_size)
+        for e in vals:
+            self._put(e)
+        return vals
+
+    def get_mean(self):
+        return numpy.sum(self.history) / self.size
+
+
+class MeanHistory(Generator):
+    def __init__(self, generator, size, initial_values=None):
+        self.generator = History(generator, size, initial_values=initial_values)
+        self.delay = generator.delay if hasattr(generator, 'delay') else 0
+
+    def get_single(self):
+        res = self.generator.get_mean()
+        self.generator.get_single()
+        return res
+

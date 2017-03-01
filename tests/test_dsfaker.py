@@ -9,7 +9,7 @@ from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distr
     Dirichlet, Exponential, F, FNonCentral, Gamma, Geometric, Gumbel, Hypergeometric, Laplace, Logistic, Lognormal, \
     Multinomial, NormalMultivariate, Normal, Lomax, Poisson, Power, Randint, RandomSample, Rayleigh, Triangular, \
     Uniform, Vonmises, Wald, Weibull, Zipf, DistributionUnbounded, DistributionBounded, DistributionNonNegative, Sinh, \
-    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator
+    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator, History, MeanHistory
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
 from dsfaker.generators.trigonometric import Sin, Cos
@@ -616,3 +616,40 @@ class TestTimeDelayedGenerator:
         end_time = datetime.datetime.now()
         elapsed_timedelta = (end_time - start_time)
         assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)
+
+
+class TestHistory:
+    def test_values_single(self):
+        gen = History(Autoincrement(), 42)
+        for i in range(10):
+            assert i == gen.get_single()
+        for i in range(10):
+            assert gen.get_prev(-10+i) == i
+        for i in range(10):
+            assert i + 10 == gen.get_single()
+        for i in range(10):
+            assert gen.get_prev(-10+i) == i + 10
+
+    def test_values_batch(self):
+        gen = History(Autoincrement(), 42)
+
+        for i, v in enumerate(gen.get_batch(10)):
+            assert i == v
+        for i in range(10):
+            assert gen.get_prev(-10+i) == i
+
+
+class TestMeanHistory:
+    def test_values_single(self):
+        gen = MeanHistory(Autoincrement(start=4), 4, initial_values=[0,1,2,3])
+
+        for i in range(42):
+            assert gen.get_single() == (i * 4.0 + 6.0) / 4.0
+
+    def test_values_batch(self):
+        gen = MeanHistory(Autoincrement(start=4), 4, initial_values=[0,1,2,3])
+
+        for i in range(42):
+            for j, v in enumerate(gen.get_batch(10)):
+                assert v == ((i * 10 + j) * 4.0 + 6.0) / 4.0
+
