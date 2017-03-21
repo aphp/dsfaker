@@ -11,7 +11,7 @@ class Generator():
     """
     Test
     """
-    def get_single(self) -> float:
+    def get_single(self):
         """
         A function that returns a single element.
         Not implemented.
@@ -25,7 +25,6 @@ class Generator():
     def get_batch(self, batch_size: int) -> numpy.array:
         """
         A function that returns a single batch of elements.
-        Not implemented.
         """
         res = []
         for _ in range(batch_size):
