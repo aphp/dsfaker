@@ -13,7 +13,7 @@ from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distr
     Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator, History, MeanHistory
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
-from dsfaker.generators.str import RegexGenerator
+from dsfaker.generators.str import Regex
 from dsfaker.generators.trigonometric import Sin, Cos
 from dsfaker.generators.timeseries import TimeSeries
 from dsfaker.generators.utils import ConstantValueGenerator, BoundingOperator, ApplyFunctionOperator, AbsoluteOperator
@@ -661,7 +661,7 @@ class TestRegex:
         patterns = [r'(0|\+33|0033)[1-9][0-9]{8}']
 
         for pattern in patterns:
-            gen = RegexGenerator(pattern)
+            gen = Regex(pattern)
 
             for i in range(42):
                 assert re.fullmatch(pattern, gen.get_single()) is not None
@@ -670,7 +670,7 @@ class TestRegex:
         patterns = [r'(0|\+33|0033)[1-9][0-9]{8}']
 
         for pattern in patterns:
-            gen = RegexGenerator(pattern)
+            gen = Regex(pattern)
 
             for i in range(42):
                 for e in gen.get_batch(10):

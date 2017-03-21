@@ -2,7 +2,7 @@ from random import Random
 from rstr import Rstr
 from . import Generator
 
-class RegexGenerator(Generator):
+class Regex(Generator):
     def __init__(self, regex, seed=None):
         self.gen = Rstr(Random(seed))
         self.regex = regex
