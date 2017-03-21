@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data Science Faker documentation! &mdash; dsfaker 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="dsfaker 0.1 documentation" href="#"/>
+        <link rel="next" title="Installation" href="installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> dsfaker
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.generators.html">Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.noise.html">Noise</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">dsfaker</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Data Science Faker documentation!</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          
+          <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="data-science-faker-documentation">
+<h1>Data Science Faker documentation!<a class="headerlink" href="#data-science-faker-documentation" title="Permalink to this headline">¶</a></h1>
+<p>DSFaker aims at providing data scientists with functions for generating and streaming arrays of data such as:</p>
+<ul class="simple">
+<li>Time-series</li>
+<li>Date/Datetime</li>
+<li>Autoincrement &amp; random autoincrement</li>
+<li>Trigonometric (Sin, Sinh, Cos, Cosh, Tan, Tanh)</li>
+<li>Random distributions</li>
+<li>Pattern repetition</li>
+<li>Noise application</li>
+<li>Basic operators between generators (+, -, /, //, *, ...)</li>
+</ul>
+<p>To generate such data, you can specify the distribution you want amongst the ones provided by numpy.random.
+Or you can also implement your own distribution to generate data.</p>
+<div class="section" id="parameterization">
+<h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this headline">¶</a></h2>
+<p>When possible, you can specify:</p>
+<ul class="simple">
+<li>The return type (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html">numpy.dtype</a>)</li>
+<li>The limits (lower bound: lb, and upper bound: ub)</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dsfaker.generators.distributions</span> <span class="k">import</span> <span class="n">Beta</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dsfaker.generators.base</span> <span class="k">import</span> <span class="n">BoundingOperator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Beta</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bb</span> <span class="o">=</span> <span class="n">BoundingOperator</span><span class="p">(</span><span class="n">generator</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">lb</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="returned-types">
+<h2>Returned types<a class="headerlink" href="#returned-types" title="Permalink to this headline">¶</a></h2>
+<p>We provide four different ways of getting the generated data:</p>
+<ul class="simple">
+<li>Get a single element</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bb</span><span class="o">.</span><span class="n">get_single</span><span class="p">()</span>
+<span class="go">-3.9368686022877473</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Stream one element at a time through python&#8217;s yield:</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">bb</span><span class="o">.</span><span class="n">stream_single</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="go">9.27201727507207</span>
+<span class="go">2.413713107525754</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Get a single batch of elements (in a <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html">numpy.array</a>):</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bb</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([ 11.390625,   8.765625,   5.671875], dtype=float16)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Stream batches through python&#8217;s yield:</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">bb</span><span class="o">.</span><span class="n">stream_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="go">[  2.46484375  10.9375       1.203125   ...,   6.78125     19.921875</span>
+<span class="go">    7.7265625 ]</span>
+<span class="go">[ 11.484375     8.953125    -1.61132812 ...,   2.33203125  -0.11328125</span>
+<span class="go">   -1.44335938]</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="28%" />
+<col width="8%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Returns</th>
+<th class="head">RAM</th>
+<th class="head">Speed</th>
+<th class="head">Advised usage</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a single element at a time</td>
+<td>No RAM limits</td>
+<td>Slowest</td>
+<td>When you don&#8217;t care about the speed</td>
+</tr>
+<tr class="row-odd"><td>batches as a numpy.array</td>
+<td>Size of a single batch limited by the RAM</td>
+<td>Quite fast</td>
+<td>A good compromise between RAM usage and generation speed</td>
+</tr>
+<tr class="row-even"><td>a numpy.array containing all the data</td>
+<td>size of the numpy.array limited by the RAM</td>
+<td>Fastest</td>
+<td>Nice when generating not too large arrays (&lt;10 millions values)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="user-guide">
+<h2>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-pypi">From pypi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.generators.html">Generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#what-is-a-generator">What is a Generator?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.html#get-single">1 - get_single()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.html#stream-single">2 - stream_single()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.html#get-batch-batch-size">3 - get_batch(batch_size)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.html#stream-batch-batch-size">4 - stream_batch(batch_size)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#generators-operations">Generators operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#available-generators">Available generators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.base.html">Base</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#generator">Generator()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#boundedgenerator-generator">BoundedGenerator(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#reduceoperator-generator">ReduceOperator(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#distribution-generator">Distribution(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#distributionunbounded-distribution">DistributionUnbounded(Distribution)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#distributionnonnegative-distribution">DistributionNonNegative(Distribution)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.base.html#distributionbounded-distribution">DistributionBounded(Distribution)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.autoincrement.html">Autoincrement</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.autoincrement.html#id1">Autoincrement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.autoincrement.html#autoincrementwithgenerator">AutoincrementWithGenerator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.date.html">Date</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.date.html#randomdatetime">RandomDatetime</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.distributions.html">Distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.series.html">Series</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.series.html#repeatpattern">RepeatPattern</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.str.html">String</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.str.html#regex">Regex</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.timeseries.html">TimeSeries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.timeseries.html#id1">TimeSeries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.trigonometric.html">Trigonometric</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.trigonometric.html#sinus-cosinus">Sinus/Cosinus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.trigonometric.html#tangent">Tangent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.trigonometric.html#hyperbolic-sinus-cosinus-tangent">Hyperbolic Sinus/Cosinus/Tangent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.utils.html">Utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#absoluteoperator">AbsoluteOperator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#applyfunctionoperator">ApplyFunctionOperator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#boundingoperator">BoundingOperator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#castoperator">CastOperator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#constantvaluegenerator">ConstantValueGenerator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dsfaker.generators.utils.html#scalingoperator">ScalingOperator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.noise.html">Noise</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.noise.html#module-dsfaker.noise.additive_noise">Additive noise</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, AP-HP.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

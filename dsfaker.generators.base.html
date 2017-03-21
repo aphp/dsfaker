@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Base &mdash; dsfaker 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="dsfaker 0.1 documentation" href="index.html"/>
+        <link rel="up" title="Generators" href="dsfaker.generators.html"/>
+        <link rel="next" title="Autoincrement" href="dsfaker.generators.autoincrement.html"/>
+        <link rel="prev" title="Generators" href="dsfaker.generators.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> dsfaker
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="dsfaker.generators.html">Generators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#what-is-a-generator">What is a Generator?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#generators-operations">Generators operations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="dsfaker.generators.html#available-generators">Available generators</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Base</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generator">Generator()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boundedgenerator-generator">BoundedGenerator(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reduceoperator-generator">ReduceOperator(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distribution-generator">Distribution(Generator)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distributionunbounded-distribution">DistributionUnbounded(Distribution)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distributionnonnegative-distribution">DistributionNonNegative(Distribution)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distributionbounded-distribution">DistributionBounded(Distribution)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.autoincrement.html">Autoincrement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.date.html">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.distributions.html">Distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.series.html">Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.str.html">String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.timeseries.html">TimeSeries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.trigonometric.html">Trigonometric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.noise.html">Noise</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dsfaker</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="dsfaker.generators.html">Generators</a> &raquo;</li>
+      
+    <li>Base</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          
+          <a href="_sources/dsfaker.generators.base.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="base">
+<span id="generators-base"></span><h1>Base<a class="headerlink" href="#base" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="generator">
+<h2>Generator()<a class="headerlink" href="#generator" title="Permalink to this headline">¶</a></h2>
+<p>This is the mother class of all others! Every new Generator must implement its four methods.</p>
+</div>
+<div class="section" id="boundedgenerator-generator">
+<h2>BoundedGenerator(Generator)<a class="headerlink" href="#boundedgenerator-generator" title="Permalink to this headline">¶</a></h2>
+<p>This Generator returns bounded values.</p>
+<p>This Generator is an abstract class that provides three attributes:</p>
+<ul class="simple">
+<li>bounded = True (Boolean)</li>
+<li>lb (lower bound)</li>
+<li>ub (upper bound)</li>
+</ul>
+</div>
+<div class="section" id="reduceoperator-generator">
+<h2>ReduceOperator(Generator)<a class="headerlink" href="#reduceoperator-generator" title="Permalink to this headline">¶</a></h2>
+<p>This Generator implements a reduce operation on two or more provided Generators.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ReduceOperator</span><span class="p">(</span><span class="n">Sin</span><span class="p">(),</span> <span class="n">Beta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Tan</span><span class="p">(),</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are many available operators that inherits from ReduceOperator:</p>
+<ul class="simple">
+<li>AddOperator</li>
+<li>SubOperator</li>
+<li>TrueDivOperator</li>
+<li>FloorDivOperator</li>
+<li>MulOperator</li>
+<li>PowOperator</li>
+<li>ModOperator</li>
+<li>AndOperator</li>
+<li>OrOperator</li>
+<li>XorOperator</li>
+</ul>
+</div>
+<div class="section" id="distribution-generator">
+<h2>Distribution(Generator)<a class="headerlink" href="#distribution-generator" title="Permalink to this headline">¶</a></h2>
+<p>This Generator implements a pseudo-random function.</p>
+<p>This Generator is an abstract class that provides four more attributes:</p>
+<ul class="simple">
+<li>bounded (Boolean)</li>
+<li>continuous (Boolean)</li>
+<li>lb (lower bound)</li>
+<li>ub (upper bound)</li>
+</ul>
+</div>
+<div class="section" id="distributionunbounded-distribution">
+<h2>DistributionUnbounded(Distribution)<a class="headerlink" href="#distributionunbounded-distribution" title="Permalink to this headline">¶</a></h2>
+<p>This Generator implements a pseudo-random function that is unbounded.</p>
+<ul class="simple">
+<li>bounded = False</li>
+</ul>
+</div>
+<div class="section" id="distributionnonnegative-distribution">
+<h2>DistributionNonNegative(Distribution)<a class="headerlink" href="#distributionnonnegative-distribution" title="Permalink to this headline">¶</a></h2>
+<p>This Generator implements a pseudo-random function that is non-negative.</p>
+<ul class="simple">
+<li>bounded = True</li>
+<li>lb = 0</li>
+</ul>
+</div>
+<div class="section" id="distributionbounded-distribution">
+<h2>DistributionBounded(Distribution)<a class="headerlink" href="#distributionbounded-distribution" title="Permalink to this headline">¶</a></h2>
+<p>This Generator implements a pseudo-random function that is non-negative.</p>
+<ul class="simple">
+<li>bounded = True</li>
+<li>lb = provided by the pseudo-random function</li>
+<li>lb = provided by the pseudo-random function</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dsfaker.generators.autoincrement.html" class="btn btn-neutral float-right" title="Autoincrement" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dsfaker.generators.html" class="btn btn-neutral" title="Generators" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, AP-HP.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

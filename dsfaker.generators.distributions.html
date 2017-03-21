@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Distributions &mdash; dsfaker 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="dsfaker 0.1 documentation" href="index.html"/>
+        <link rel="up" title="Generators" href="dsfaker.generators.html"/>
+        <link rel="next" title="Series" href="dsfaker.generators.series.html"/>
+        <link rel="prev" title="Date" href="dsfaker.generators.date.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> dsfaker
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="dsfaker.generators.html">Generators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#what-is-a-generator">What is a Generator?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsfaker.generators.html#generators-operations">Generators operations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="dsfaker.generators.html#available-generators">Available generators</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.base.html">Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.autoincrement.html">Autoincrement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.date.html">Date</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.series.html">Series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.str.html">String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.timeseries.html">TimeSeries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.trigonometric.html">Trigonometric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsfaker.generators.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsfaker.noise.html">Noise</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dsfaker</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="dsfaker.generators.html">Generators</a> &raquo;</li>
+      
+    <li>Distributions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          
+          <a href="_sources/dsfaker.generators.distributions.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dsfaker.generators.distributions">
+<span id="distributions"></span><h1>Distributions<a class="headerlink" href="#module-dsfaker.generators.distributions" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Beta">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Beta</code><span class="sig-paren">(</span><em>a: typing.Union[float, numpy.ndarray, typing.Iterable[float]], b: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Beta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Beta distribution is bounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.beta.html">numpy.random.mtrand.RandomState.beta</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[f(x; a,b) = \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1 - x)^{\beta - 1}\]</div>
+<p>where the normalisation, B, is the beta function,</p>
+<div class="math">
+\[B(\alpha, \beta) = \int_0^1 t^{\alpha - 1} (1 - t)^{\beta - 1} dt.\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Beta.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Beta.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Beta.lb">
+<code class="descname">lb</code><em class="property"> = 0</em><a class="headerlink" href="#dsfaker.generators.distributions.Beta.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Beta.ub">
+<code class="descname">ub</code><em class="property"> = 1</em><a class="headerlink" href="#dsfaker.generators.distributions.Beta.ub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Binomial">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Binomial</code><span class="sig-paren">(</span><em>n: typing.Union[int, numpy.ndarray, typing.Iterable[int]], p: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Binomial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Binomial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Binomial distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.binomial.html">numpy.random.mtrand.RandomState.binomial</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(N) = \binom{n}{N}p^N(1-p)^{n-N}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Binomial.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Binomial.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.BinomialNegative">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">BinomialNegative</code><span class="sig-paren">(</span><em>n: typing.Union[int, numpy.ndarray, typing.Iterable[int]], p: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#BinomialNegative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.BinomialNegative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The negative Binomial distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.negative_binomial.html">numpy.random.mtrand.RandomState.negative_binomial</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(N;n,p) = \binom{N+n-1}{n-1}p^{n}(1-p)^{N}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.BinomialNegative.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.BinomialNegative.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.CauchyStandard">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">CauchyStandard</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#CauchyStandard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.CauchyStandard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The standard Cauchy distribution is unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.standard_cauchy.html">numpy.random.mtrand.RandomState.standard_cauchy</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x; x_0, \gamma) = \frac{1}{\pi \gamma \bigl[ 1+ (\frac{x-x_0}{\gamma})^2 \bigr] }\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.CauchyStandard.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.CauchyStandard.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Chisquare">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Chisquare</code><span class="sig-paren">(</span><em>k: typing.Union[int, numpy.ndarray, typing.Iterable[int]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Chisquare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Chisquare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Chisquare distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.chisquare.html">numpy.random.mtrand.RandomState.chisquare</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{(1/2)^{k/2}}{\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Chisquare.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Chisquare.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.ChisquareNonCentral">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">ChisquareNonCentral</code><span class="sig-paren">(</span><em>k: typing.Union[int, numpy.ndarray, typing.Iterable[int]], nonc: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#ChisquareNonCentral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.ChisquareNonCentral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The non-central Chisquare distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.noncentral_chisquare.html">numpy.random.mtrand.RandomState.noncentral_chisquare</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x;df,nonc) = \sum^{\infty}_{i=0} \frac{e^{-nonc/2}(nonc/2)^{i}}{i!} P_{Y_{df+2i}}(x)\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.ChisquareNonCentral.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.ChisquareNonCentral.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Choice">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Choice</code><span class="sig-paren">(</span><em>probabilities: &lt;built-in function array&gt;</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Choice distribution is bounded and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.choice.html">numpy.random.mtrand.RandomState.choice</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Choice.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Choice.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Dirichlet">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Dirichlet</code><span class="sig-paren">(</span><em>alpha: list</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Dirichlet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Dirichlet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Dirichlet distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.dirichlet.html">numpy.random.mtrand.RandomState.dirichlet</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[X \approx \prod_{i=1}^{k}{x^{\alpha_i-1}_i}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Dirichlet.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Dirichlet.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Exponential">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Exponential</code><span class="sig-paren">(</span><em>beta: typing.Union[int</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[int]] = 1.0</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Exponential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Exponential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Exponential distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.exponential.html">numpy.random.mtrand.RandomState.exponential</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[f(x; \frac{1}{\beta}) = \frac{1}{\beta} \exp(-\frac{x}{\beta})\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Exponential.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Exponential.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.F">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">F</code><span class="sig-paren">(</span><em>dfnum: typing.Union[int, numpy.ndarray, typing.Iterable[int]], dfden: typing.Union[int, numpy.ndarray, typing.Iterable[int]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#F"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.F" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Fisher distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.f.html">numpy.random.mtrand.RandomState.f</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.F.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.F.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.FNonCentral">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">FNonCentral</code><span class="sig-paren">(</span><em>dfnum: typing.Union[int, numpy.ndarray, typing.Iterable[int]], dfden: typing.Union[int, numpy.ndarray, typing.Iterable[int]], nonc: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#FNonCentral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.FNonCentral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The non-central Fisher distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.noncentral_f.html">numpy.random.mtrand.RandomState.noncentral_f</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.FNonCentral.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.FNonCentral.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Gamma">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Gamma</code><span class="sig-paren">(</span><em>k: typing.Union[float, numpy.ndarray, typing.Iterable[float]], theta: typing.Union[float, numpy.ndarray, typing.Iterable[float]] = 1.0, seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Gamma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Gamma distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.gamma.html">numpy.random.mtrand.RandomState.gamma</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = x^{k-1}\frac{e^{-x/\theta}}{\theta^k\Gamma(k)}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Gamma.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Gamma.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Geometric">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Geometric</code><span class="sig-paren">(</span><em>p: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Geometric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Geometric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Geometric distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.geometric.html">numpy.random.mtrand.RandomState.geometric</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[f(k) = (1 - p)^{k - 1} p\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Geometric.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Geometric.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Geometric.lb">
+<code class="descname">lb</code><em class="property"> = 1</em><a class="headerlink" href="#dsfaker.generators.distributions.Geometric.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Gumbel">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Gumbel</code><span class="sig-paren">(</span><em>mu: typing.Union[float</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[float]] = 0.0</em>, <em>beta: typing.Union[float</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[float]] = 1.0</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Gumbel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Gumbel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The Gumbel distribution is unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.gumbel.html">numpy.random.mtrand.RandomState.gumbel</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{e^{-(x - \mu)/ \beta}}{\beta} e^{ -e^{-(x - \mu)/ \beta}}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Gumbel.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Gumbel.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Hypergeometric">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Hypergeometric</code><span class="sig-paren">(</span><em>n: int, m: typing.Union[int, numpy.ndarray, typing.Iterable[int]], N: typing.Union[int, numpy.ndarray, typing.Iterable[int]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Hypergeometric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Hypergeometric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Hypergeometric distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.hypergeometric.html">numpy.random.mtrand.RandomState.hypergeometric</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x) = \frac{\binom{m}{n}\binom{N-m}{n-x}}{\binom{N}{n}}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Hypergeometric.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Hypergeometric.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Laplace">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Laplace</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], beta: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Laplace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Laplace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The Laplace distribution is unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.laplace.html">numpy.random.mtrand.RandomState.laplace</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[f(x; \mu, \lambda) = \frac{1}{2\lambda} \exp\left(-\frac{|x - \mu|}{\lambda}\right)\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Laplace.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Laplace.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Logistic">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Logistic</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], beta: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Logistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Logistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The Logistic distribution is unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.logistic.html">numpy.random.mtrand.RandomState.logistic</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x) = P(x) = \frac{e^{-(x-\mu)/s}}{s(1+e^{-(x-\mu)/s})^2}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Logistic.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Logistic.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Lognormal">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Lognormal</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], sigma: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Lognormal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Lognormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Lognormal distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.lognormal.html">numpy.random.mtrand.RandomState.lognormal</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{1}{\sigma x \sqrt{2\pi}} e^{(-\frac{(ln(x)-\mu)^2}{2\sigma^2})}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Lognormal.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Lognormal.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Lomax">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Lomax</code><span class="sig-paren">(</span><em>a: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Lomax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Lomax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Pareto II or Lomax distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.pareto.html">numpy.random.mtrand.RandomState.pareto</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{am^a}{x^{a+1}}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Lomax.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Lomax.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Lomax.lb">
+<code class="descname">lb</code><em class="property"> = 0</em><a class="headerlink" href="#dsfaker.generators.distributions.Lomax.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Multinomial">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Multinomial</code><span class="sig-paren">(</span><em>n: int, pvals: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Multinomial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Multinomial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Multinomial distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.multinomial.html">numpy.random.mtrand.RandomState.multinomial</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Multinomial.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Multinomial.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Normal">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Normal</code><span class="sig-paren">(</span><em>mean: typing.Union[float</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[float]] = 0.0</em>, <em>std: typing.Union[float</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[float]] = 1.0</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Normal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Normal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The Normal/Gaussian distribution if unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.normal.html">numpy.random.mtrand.RandomState.normal</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{1}{\sqrt{ 2 \pi \sigma^2 }} e^{ - \frac{ (x - \mu)^2 } {2 \sigma^2} }\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Normal.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Normal.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.NormalMultivariate">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">NormalMultivariate</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], cov: typing.Union[list, numpy.ndarray], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#NormalMultivariate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.NormalMultivariate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionUnbounded</span></code></p>
+<p>The multivariate Normal distribution is unbounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.multivariate_normal.html">numpy.random.mtrand.RandomState.multivariate_normal</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.NormalMultivariate.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.NormalMultivariate.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Poisson">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Poisson</code><span class="sig-paren">(</span><em>lam: typing.Union[float</em>, <em>numpy.ndarray</em>, <em>typing.Iterable[float]] = 1.0</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Poisson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Poisson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Poisson distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.poisson.html">numpy.random.mtrand.RandomState.poisson</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[f(k; \lambda)=\frac{\lambda^k e^{-\lambda}}{k!}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Poisson.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Poisson.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Power">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Power</code><span class="sig-paren">(</span><em>a: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Power distribution is bounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.power.html">numpy.random.mtrand.RandomState.power</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x; a) = ax^{a-1}, 0 \le x \le 1, a&gt;0.\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Power.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Power.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Power.lb">
+<code class="descname">lb</code><em class="property"> = 0</em><a class="headerlink" href="#dsfaker.generators.distributions.Power.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Power.ub">
+<code class="descname">ub</code><em class="property"> = 1</em><a class="headerlink" href="#dsfaker.generators.distributions.Power.ub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Randint">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Randint</code><span class="sig-paren">(</span><em>lb: int</em>, <em>ub: int</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Randint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Randint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Randint distribution is bounded and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.randint.html">numpy.random.mtrand.RandomState.randint</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Randint.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Randint.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.RandomSample">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">RandomSample</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#RandomSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.RandomSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The RandomSample distribution is bounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.random_sample.html">numpy.random.mtrand.RandomState.random_sample</a>.</p>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.RandomSample.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.RandomSample.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.RandomSample.lb">
+<code class="descname">lb</code><em class="property"> = 0</em><a class="headerlink" href="#dsfaker.generators.distributions.RandomSample.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.RandomSample.ub">
+<code class="descname">ub</code><em class="property"> = 1</em><a class="headerlink" href="#dsfaker.generators.distributions.RandomSample.ub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Rayleigh">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Rayleigh</code><span class="sig-paren">(</span><em>sigma: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Rayleigh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Rayleigh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Rayleigh distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.rayleigh.html">numpy.random.mtrand.RandomState.rayleigh</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x;scale) = \frac{x}{scale^2}e^{\frac{-x^2}{2 \cdotp scale^2}}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Rayleigh.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Rayleigh.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Triangular">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Triangular</code><span class="sig-paren">(</span><em>left: typing.Union[float, numpy.ndarray, typing.Iterable[float]], mode: typing.Union[float, numpy.ndarray, typing.Iterable[float]], right: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Triangular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Triangular" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Triangular distribution is bounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.triangular.html">numpy.random.mtrand.RandomState.triangular</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[P(x;l, m, r) = \begin{cases} \frac{2(x-l)}{(r-l)(m-l)}&amp; \text{for $l \leq x \leq m$}, \frac{2(r-x)}{(r-l)(r-m)}&amp; \text{for $m \leq x \leq r$}, 0&amp; \text{otherwise}. \end{cases}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Triangular.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Triangular.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Uniform">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>lb: typing.Union[float, numpy.ndarray, typing.Iterable[float]], ub: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Uniform distribution is bounded and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.uniform.html">numpy.random.mtrand.RandomState.uniform</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{1}{b - a}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Uniform.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Uniform.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Vonmises">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Vonmises</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], kappa: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Vonmises"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Vonmises" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionBounded</span></code></p>
+<p>The Vonmises distribution is bounded and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.vonmises.html">numpy.random.mtrand.RandomState.vonmises</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{e^{\kappa cos(x-\mu)}}{2\pi I_0(\kappa)}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Vonmises.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Vonmises.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Vonmises.lb">
+<code class="descname">lb</code><em class="property"> = -3.141592653589793</em><a class="headerlink" href="#dsfaker.generators.distributions.Vonmises.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Vonmises.ub">
+<code class="descname">ub</code><em class="property"> = 3.141592653589793</em><a class="headerlink" href="#dsfaker.generators.distributions.Vonmises.ub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Wald">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Wald</code><span class="sig-paren">(</span><em>mu: typing.Union[float, numpy.ndarray, typing.Iterable[float]], lam: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Wald"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Wald" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Wald distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.wald.html">numpy.random.mtrand.RandomState.wald</a>.</p>
+<p>Distribution function:</p>
+<p>continuous = True
+.. math:: P(x;mean,scale) = sqrt{frac{scale}{2pi x^3}}e^ frac{-scale(x-mean)^2}{2cdotp mean^2x}</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Weibull">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Weibull</code><span class="sig-paren">(</span><em>a: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Weibull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Weibull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Weibull distribution is non-negative and continuous.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.weibull.html">numpy.random.mtrand.RandomState.weibull</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[X = (-ln(U))^{1/a}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Weibull.continuous">
+<code class="descname">continuous</code><em class="property"> = True</em><a class="headerlink" href="#dsfaker.generators.distributions.Weibull.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsfaker.generators.distributions.Zipf">
+<em class="property">class </em><code class="descclassname">dsfaker.generators.distributions.</code><code class="descname">Zipf</code><span class="sig-paren">(</span><em>a: typing.Union[float, numpy.ndarray, typing.Iterable[float]], seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dsfaker/generators/distributions.html#Zipf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dsfaker.generators.distributions.Zipf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dsfaker.generators.base.DistributionNonNegative</span></code></p>
+<p>The Zipf distribution is non-negative and discrete.</p>
+<p>The implementation is from <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.5.x/reference/generated/numpy.random.mtrand.RandomState.zipf.html">numpy.random.mtrand.RandomState.zipf</a>.</p>
+<p>Distribution function:</p>
+<div class="math">
+\[p(x) = \frac{x^{-a}}{\zeta(a)}\]</div>
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Zipf.continuous">
+<code class="descname">continuous</code><em class="property"> = False</em><a class="headerlink" href="#dsfaker.generators.distributions.Zipf.continuous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dsfaker.generators.distributions.Zipf.lb">
+<code class="descname">lb</code><em class="property"> = 1</em><a class="headerlink" href="#dsfaker.generators.distributions.Zipf.lb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dsfaker.generators.series.html" class="btn btn-neutral float-right" title="Series" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dsfaker.generators.date.html" class="btn btn-neutral" title="Date" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, AP-HP.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
