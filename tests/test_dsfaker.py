@@ -1,5 +1,6 @@
 import datetime
 from decimal import Decimal
+import re
 
 import numpy as np
 import pytest
@@ -12,6 +13,7 @@ from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distr
     Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator, History, MeanHistory
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
+from dsfaker.generators.str import RegexGenerator
 from dsfaker.generators.trigonometric import Sin, Cos
 from dsfaker.generators.timeseries import TimeSeries
 from dsfaker.generators.utils import ConstantValueGenerator, BoundingOperator, ApplyFunctionOperator, AbsoluteOperator
@@ -653,3 +655,23 @@ class TestMeanHistory:
             for j, v in enumerate(gen.get_batch(10)):
                 assert v == ((i * 10 + j) * 4.0 + 6.0) / 4.0
 
+
+class TestRegex:
+    def test_values_single(self):
+        patterns = [r'(0|\+33|0033)[1-9][0-9]{8}']
+
+        for pattern in patterns:
+            gen = RegexGenerator(pattern)
+
+            for i in range(42):
+                assert re.fullmatch(pattern, gen.get_single()) is not None
+
+    def test_values_batch(self):
+        patterns = [r'(0|\+33|0033)[1-9][0-9]{8}']
+
+        for pattern in patterns:
+            gen = RegexGenerator(pattern)
+
+            for i in range(42):
+                for e in gen.get_batch(10):
+                    assert re.fullmatch(pattern, gen.get_single()) is not None
