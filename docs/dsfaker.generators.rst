@@ -107,6 +107,7 @@ There are many different Generators available, but every Generator implements an
    dsfaker.generators.date
    dsfaker.generators.distributions
    dsfaker.generators.series
+   dsfaker.generators.str
    dsfaker.generators.timeseries
    dsfaker.generators.trigonometric
    dsfaker.generators.utils

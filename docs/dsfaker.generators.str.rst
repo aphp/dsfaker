@@ -9,7 +9,7 @@ This Generator is returning random strings matching a provided regex.
 
 .. code-block:: python3
 
-    from dsfaker.generators.string import Regex
+    from dsfaker.generators.str import Regex
 
     pattern = r'(0|\+33|0033)[1-9][0-9]{8}'
 
