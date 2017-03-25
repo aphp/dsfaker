@@ -7,5 +7,5 @@ class Regex(Generator):
         self.gen = Rstr(Random(seed))
         self.regex = regex
 
-    def get_single(self):
+    def _get_single(self):
         return self.gen.xeger(self.regex)

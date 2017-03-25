@@ -43,8 +43,8 @@ class RepeatPattern(Serie):
                 self.index += size
                 return self.pattern[(self.index-size):self.index]
 
-    def get_single(self):
+    def _get_single(self):
         return self._get(1)
 
-    def get_batch(self, batch_size: int):
+    def _get_batch(self, batch_size: int):
         return self._get(batch_size)

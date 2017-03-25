@@ -6,17 +6,26 @@ from typing import Iterable
 
 import numpy
 
+from dsfaker.listeners import Listener
+
 
 class Generator():
-    """
-    Test
-    """
+    def _get_single(self):
+        raise NotImplementedError("_get_single not implemented")
+
+    def _get_batch(self, batch_size: int):
+        raise NotImplementedError("_get_batch not implemented")
+
     def get_single(self):
         """
         A function that returns a single element.
-        Not implemented.
         """
-        raise NotImplementedError("get_single not implemented")
+        val = self._get_single()
+        if hasattr(self, '_listeners'):
+            for listener in self._listeners:
+                listener.put_single(val)
+        return val
+
 
     def stream_single(self) -> Iterable:
         while True:
@@ -24,19 +33,33 @@ class Generator():
 
     def get_batch(self, batch_size: int) -> numpy.array:
         """
-        A function that returns a single batch of elements.
+        A function that returns a batch of elements.
         """
-        res = []
-        for _ in range(batch_size):
-            res.append(self.get_single())
-        return numpy.asarray(res)
+        try:
+            vals = self._get_batch(batch_size=batch_size)
+        except NotImplementedError:
+            res = []
+            for _ in range(batch_size):
+                res.append(self._get_single())
+            vals = numpy.asarray(res)
+        if hasattr(self, '_listeners'):
+            for listener in self._listeners:
+                listener.put_batch(vals)
+        return vals
 
     def stream_batch(self, batch_size: int) -> Iterable:
         while True:
             yield self.get_batch(batch_size=batch_size)
 
+    def add_listener(self, listener: Listener):
+        if not hasattr(self, '_listeners'):
+            self._listeners = []
+        self._listeners.append(listener)
+
     def copy(self):
-        return copy.deepcopy(self)
+        tmp = copy.deepcopy(self)
+        tmp._listeners = []
+        return tmp
 
     def __add__(self, other):
         return AddOperator(self, other)
@@ -105,14 +128,14 @@ class ReduceOperator(Generator):
         self.generators = generators
         self.reduce_lambda = reduce_lambda
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         def _get_single(x):
             if isinstance(x, Generator):
                 return x.get_single()
             return x
         return reduce(lambda a, b: self.reduce_lambda(_get_single(a), _get_single(b)), self.generators)
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         def _get_batch(x, batch_size):
             if isinstance(x, Generator):
                 return x.get_batch(batch_size=batch_size)
@@ -208,10 +231,10 @@ class Distribution(Generator):
     def _get(self, size=None):
         raise NotImplementedError("_get not implemented!")
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         return self._get()
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         return self._get(size=batch_size)
 
 

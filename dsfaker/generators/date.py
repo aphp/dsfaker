@@ -18,8 +18,8 @@ class RandomDatetime(Generator):
         self.unit = unit
         self.td_unit = 'timedelta64[{}]'.format(unit)
 
-    def get_single(self):
+    def _get_single(self):
         return self.start + numpy.timedelta64(int(round(self.rnb.get_single())), self.unit)
 
-    def get_batch(self, batch_size: int):
+    def _get_batch(self, batch_size: int):
         return self.start + self.rnb.get_batch(batch_size=batch_size).astype(self.td_unit)

@@ -4,6 +4,7 @@ import time
 import numpy
 
 from dsfaker.exceptions import NotCompatibleGeneratorException
+from dsfaker.listeners import CircularBuffer
 from . import BoundedGenerator, Generator
 
 
@@ -12,10 +13,10 @@ class ConstantValueGenerator(Generator):
         self.value = value
         self.dtype = dtype
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         return self.value
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         return numpy.ones(batch_size, dtype=self.dtype) * self.value
 
 
@@ -25,10 +26,10 @@ class BoundingOperator(BoundedGenerator):
         self.lb = lb
         self.ub = ub
 
-    def get_single(self):
+    def _get_single(self):
         return numpy.clip(self.generator.get_single(), self.lb, self.ub)
 
-    def get_batch(self, batch_size: int):
+    def _get_batch(self, batch_size: int):
         return numpy.clip(self.generator.get_batch(batch_size=batch_size), self.lb, self.ub)
 
 
@@ -48,10 +49,10 @@ class ScalingOperator(BoundedGenerator):
         self.coef = (ub - lb) / (self.generator.ub - self.generator.lb)
         self.dtype = dtype
 
-    def get_single(self):
+    def _get_single(self):
         return self.generator.get_single() * self.coef - (self.gen_mid * self.coef) + self.mid
 
-    def get_batch(self, batch_size: int):
+    def _get_batch(self, batch_size: int):
         return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype) * self.coef - (self.gen_mid * self.coef) + self.mid
 
 
@@ -60,10 +61,10 @@ class ApplyFunctionOperator(Generator):
         self.function = function
         self.generator = generator
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         return self.function(self.generator.get_single())
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         return self.function(self.generator.get_batch(batch_size=batch_size))
 
 
@@ -89,7 +90,7 @@ class TimeDelayedGenerator(Generator):
         self.start_time = None
         self.previous_time = None
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         if self.time_delay_sec is not None:
             td = self.time_delay_sec
         else:
@@ -107,7 +108,7 @@ class TimeDelayedGenerator(Generator):
         self.previous_time += td
         return self.generator.get_single()
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         if self.time_delay_sec is not None:
             td = self.time_delay_sec * batch_size
         else:
@@ -130,56 +131,19 @@ class CastOperator(Generator):
         self.generator = generator
         self.dtype = dtype
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         return self.generator.get_single()
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         return numpy.asarray(self.generator.get_batch(batch_size=batch_size), dtype=self.dtype)
-
-
-class History(Generator):
-    def __init__(self, generator, size, initial_values=None):
-        if initial_values is None:
-            self.history = numpy.zeros(size, dtype=numpy.float64)
-        else:
-            assert size == len(initial_values)
-            self.history = numpy.asarray(initial_values)
-        self.idx = 0
-
-        self.generator = generator
-        self.size = size
-
-    def get_prev(self, i):
-        return self.history[(self.size + self.idx + i) % self.size]
-
-    def _put(self, e):
-        if self.idx == self.size:
-            self.idx = 0
-        self.history[self.idx] = e
-        self.idx += 1
-
-    def get_single(self) -> float:
-        e = self.generator.get_single()
-        self._put(e)
-        return e
-
-    def get_batch(self, batch_size: int) -> numpy.array:
-        vals = self.generator.get_batch(batch_size)
-        for e in vals:
-            self._put(e)
-        return vals
-
-    def get_mean(self):
-        return numpy.sum(self.history) / self.size
 
 
 class MeanHistory(Generator):
     def __init__(self, generator, size, initial_values=None):
-        self.generator = History(generator, size, initial_values=initial_values)
-        self.delay = generator.delay if hasattr(generator, 'delay') else 0
+        self.generator = generator
+        self.history = CircularBuffer(size=size, initial_values=initial_values)
 
-    def get_single(self):
-        res = self.generator.get_mean()
-        self.generator.get_single()
-        return res
-
+    def _get_single(self):
+        mean = self.history.get_mean()
+        self.history.put_single(self.generator.get_single())
+        return mean

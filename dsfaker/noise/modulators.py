@@ -30,10 +30,10 @@ class ModulatorLinearInterpolation(Generator):
         self.future_time = None
         self.index = None
 
-    def get_single(self) -> float:
+    def _get_single(self) -> float:
         # TODO
         raise NotImplementedError()
 
-    def get_batch(self, batch_size: int) -> numpy.array:
+    def _get_batch(self, batch_size: int) -> numpy.array:
         # TODO
         raise NotImplementedError()

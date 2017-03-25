@@ -6,7 +6,7 @@ Base
 Generator()
 -----------
 
-This is the mother class of all others! Every new Generator must implement its four methods.
+This is the mother class of all other Generators! Every new Generator must implement its private methods.
 
 
 BoundedGenerator(Generator)

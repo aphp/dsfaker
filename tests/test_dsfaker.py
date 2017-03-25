@@ -622,23 +622,25 @@ class TestTimeDelayedGenerator:
 
 class TestHistory:
     def test_values_single(self):
-        gen = History(Autoincrement(), 42)
+        ai = Autoincrement()
+        h = History(42)
+        ai.add_listener(h)
         for i in range(10):
-            assert i == gen.get_single()
+            ai.get_single()
         for i in range(10):
-            assert gen.get_prev(-10+i) == i
-        for i in range(10):
-            assert i + 10 == gen.get_single()
-        for i in range(10):
-            assert gen.get_prev(-10+i) == i + 10
+            assert h.get_prev(-10+i) == i
+        for i in range(52):
+            ai.get_single()
+        for i in range(12):
+            assert h.get_prev(-32+i) == i + 30
 
     def test_values_batch(self):
-        gen = History(Autoincrement(), 42)
-
-        for i, v in enumerate(gen.get_batch(10)):
-            assert i == v
+        ai = Autoincrement()
+        h = History(42)
+        ai.add_listener(h)
+        ai.get_batch(10)
         for i in range(10):
-            assert gen.get_prev(-10+i) == i
+            assert h.get_prev(-10+i) == i
 
 
 class TestMeanHistory:
@@ -674,4 +676,4 @@ class TestRegex:
 
             for i in range(42):
                 for e in gen.get_batch(10):
-                    assert re.fullmatch(pattern, gen.get_single()) is not None
+                    assert re.fullmatch(pattern, e) is not None

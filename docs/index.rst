@@ -97,4 +97,5 @@ User guide
 
    installation
    dsfaker.generators
+   dsfaker.listeners
    dsfaker.noise

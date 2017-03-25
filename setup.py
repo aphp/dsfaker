@@ -14,6 +14,7 @@ setup(name='dsfaker',
       license='MIT',
       packages=['dsfaker',
                 'dsfaker.generators',
+                'dsfaker.listeners',
                 'dsfaker.noise'],
       install_requires=[
             'numpy==1.12.0',
