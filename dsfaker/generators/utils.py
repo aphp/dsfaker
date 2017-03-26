@@ -2,6 +2,7 @@ import datetime
 import time
 
 import numpy
+import re
 
 from dsfaker.exceptions import NotCompatibleGeneratorException
 from dsfaker.listeners import CircularBuffer
@@ -147,3 +148,45 @@ class MeanHistory(Generator):
         mean = self.history.get_mean()
         self.history.put_single(self.generator.get_single())
         return mean
+
+
+class DifferenceEquation(Generator):
+    def __init__(self, generator: Generator, equation):
+        self.gen = generator
+        self.original_equation = equation
+        self._parse_eq()
+
+    def _parse_eq(self):
+        x = r'x\s*\(\s*t\s*-\s*(\d+)\s*\)'
+        y = r'y\s*\(\s*t\s*-\s*(\d+)\s*\)'
+        re_x = re.compile(x)
+        re_y = re.compile(y)
+
+        self.all_x = [int(e) for e in re_x.findall(self.original_equation)]
+        self.all_y = [int(e) for e in re_y.findall(self.original_equation)]
+
+        if len(self.all_x) > 0:
+            self.gen_hist = CircularBuffer(max(self.all_x))
+
+        if len(self.all_y) > 0:
+            self.res_hist = CircularBuffer(max(self.all_y))
+
+        self.equation = re.sub(x, r'xl\1', self.original_equation)
+        self.equation = re.sub(y, r'yl\1', self.equation)
+
+        self.equation = re.sub(r'x\s*\(\s*t\s*\)', r'x', self.equation)
+
+    def _get_single(self):
+        variables = {}
+        variables['x'] = self.gen.get_single()
+        for x in self.all_x:
+            variables['xl{}'.format(x)] = self.gen_hist.get_prev(-x)
+        for y in self.all_y:
+            variables['yl{}'.format(y)] = self.res_hist.get_prev(-y)
+
+        res = eval(self.equation, variables)
+
+        self.gen_hist.put_single(variables['x'])
+        self.res_hist.put_single(res)
+
+        return res

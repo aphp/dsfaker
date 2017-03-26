@@ -10,7 +10,8 @@ from dsfaker.generators import Generator, ScalingOperator, RandomDatetime, Distr
     Dirichlet, Exponential, F, FNonCentral, Gamma, Geometric, Gumbel, Hypergeometric, Laplace, Logistic, Lognormal, \
     Multinomial, NormalMultivariate, Normal, Lomax, Poisson, Power, Randint, RandomSample, Rayleigh, Triangular, \
     Uniform, Vonmises, Wald, Weibull, Zipf, DistributionUnbounded, DistributionBounded, DistributionNonNegative, Sinh, \
-    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator, History, MeanHistory
+    Cosh, Tanh, Tan, BoundedGenerator, Choice, CastOperator, TimeDelayedGenerator, MeanHistory, DifferenceEquation, \
+    CircularBuffer, Listener
 from dsfaker.generators.autoincrement import Autoincrement, AutoincrementWithGenerator
 from dsfaker.generators.series import RepeatPattern
 from dsfaker.generators.str import Regex
@@ -620,10 +621,10 @@ class TestTimeDelayedGenerator:
         assert datetime.timedelta(seconds=.47) <= elapsed_timedelta <= datetime.timedelta(seconds=.53)
 
 
-class TestHistory:
+class TestCircularBuffer:
     def test_values_single(self):
         ai = Autoincrement()
-        h = History(42)
+        h = CircularBuffer(42)
         ai.add_listener(h)
         for i in range(10):
             ai.get_single()
@@ -636,7 +637,7 @@ class TestHistory:
 
     def test_values_batch(self):
         ai = Autoincrement()
-        h = History(42)
+        h = CircularBuffer(42)
         ai.add_listener(h)
         ai.get_batch(10)
         for i in range(10):
@@ -677,3 +678,22 @@ class TestRegex:
             for i in range(42):
                 for e in gen.get_batch(10):
                     assert re.fullmatch(pattern, e) is not None
+
+
+class TestDifferenceEquation:
+    def test_values_single(self):
+        de = DifferenceEquation(Autoincrement(), "2*y(t-1) - y ( t - 2 ) + x(t ) - 2*x(t-6) +x ( t - 12 )")
+        expected_vals = [0, 1, 4, 10, 20, 35, 56, 82, 112, 145, 180, 216, 252, 288, 324, 360, 396, 432, 468, 504, 540, 576, 612, 648, 684]
+
+        for val in expected_vals:
+            assert val == de.get_single()
+
+
+class TestListener:
+    def test_raise(self):
+        with pytest.raises(NotImplementedError):
+            l = Listener()
+            l.put_single(10)
+        with pytest.raises(NotImplementedError):
+            l = Listener()
+            l.put_batch([10, 42])
