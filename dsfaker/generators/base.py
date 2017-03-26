@@ -26,7 +26,6 @@ class Generator():
                 listener.put_single(val)
         return val
 
-
     def stream_single(self) -> Iterable:
         while True:
             yield self.get_single()

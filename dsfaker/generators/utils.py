@@ -186,7 +186,9 @@ class DifferenceEquation(Generator):
 
         res = eval(self.equation, variables)
 
-        self.gen_hist.put_single(variables['x'])
-        self.res_hist.put_single(res)
+        if hasattr(self, 'gen_hist'):
+            self.gen_hist.put_single(variables['x'])
+        if hasattr(self, 'res_hist'):
+            self.res_hist.put_single(res)
 
         return res

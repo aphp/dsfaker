@@ -688,6 +688,14 @@ class TestDifferenceEquation:
         for val in expected_vals:
             assert val == de.get_single()
 
+    def test_no_y(self):
+        diff_gen = DifferenceEquation(Autoincrement(), "(2*x(t) + x(t-1) - x(t-3) - 2*x(t-4))/8.0")
+        diff_gen.get_single()
+
+    def test_no_x(self):
+        diff_gen = DifferenceEquation(Autoincrement(), "(y(t-1) - y(t-3) - 2*y(t-4))/8.0")
+        diff_gen.get_single()
+
 
 class TestListener:
     def test_raise(self):
