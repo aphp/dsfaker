@@ -39,7 +39,7 @@ The documentation is available here: https://dubrzr.github.io/dsfaker/.
 .. |codecov| image:: https://codecov.io/gh/Dubrzr/dsfaker/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/Dubrzr/dsfaker
 .. |doc| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
-   :target: https://dubrzr.github.io/dsfaker/
+   :target: https://eds-aphp.github.io/dsfaker/
 .. |pypi_v| image:: https://img.shields.io/pypi/v/dsfaker.svg
    :target: https://pypi.python.org/pypi/dsfaker
 .. |pypi_month| image:: https://img.shields.io/pypi/dm/dsfaker.svg
