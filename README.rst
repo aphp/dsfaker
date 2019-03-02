@@ -31,7 +31,7 @@ Installation
 Documentation
 -------------
 
-The documentation is available here: https://dubrzr.github.io/dsfaker/.
+The documentation is available here: https://eds-aphp.github.io/dsfaker/.
 
 
 .. |Build Status| image:: https://travis-ci.org/Dubrzr/dsfaker.svg?branch=master
