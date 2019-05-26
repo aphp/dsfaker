@@ -16,6 +16,6 @@ setup(name='dsfaker',
                 'dsfaker.generators',
                 'dsfaker.noise'],
       install_requires=[
-            'numpy==1.12.0',
+            'numpy>=1.12.0',
       ],
       zip_safe=False)
