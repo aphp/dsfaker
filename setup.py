@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='dsfaker',
-      version='0.2.2',
+      version='0.2.3',
       description='Data Science Faker',
       long_description=readme(),
       url='http://github.com/dubrzr/dsfaker',
