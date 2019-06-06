@@ -34,7 +34,7 @@ Documentation
 The documentation is available here: https://eds-aphp.github.io/dsfaker/.
 
 
-.. |Build Status| image:: https://travis-ci.org/Dubrzr/dsfaker.svg?branch=master
+.. |Build Status| image:: https://travis-ci.org/eds-aphp/dsfaker.svg?branch=master
    :target: https://travis-ci.org/Dubrzr/dsfaker
 .. |codecov| image:: https://codecov.io/gh/Dubrzr/dsfaker/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/Dubrzr/dsfaker
