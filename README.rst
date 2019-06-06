@@ -35,9 +35,9 @@ The documentation is available here: https://eds-aphp.github.io/dsfaker/.
 
 
 .. |Build Status| image:: https://travis-ci.org/eds-aphp/dsfaker.svg?branch=master
-   :target: https://travis-ci.org/Dubrzr/dsfaker
-.. |codecov| image:: https://codecov.io/gh/Dubrzr/dsfaker/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/Dubrzr/dsfaker
+   :target: https://travis-ci.org/eds-aphp/dsfaker
+.. |codecov| image:: https://codecov.io/gh/eds-aphp/dsfaker/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/eds-aphp/dsfaker
 .. |doc| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
    :target: https://eds-aphp.github.io/dsfaker/
 .. |pypi_v| image:: https://img.shields.io/pypi/v/dsfaker.svg
